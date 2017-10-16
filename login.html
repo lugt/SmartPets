@@ -23,6 +23,46 @@
 			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
 		});
 	});
+	
+	
+	
+	function denglu(){
+		var a,s,t;
+		
+		s = $("#in_username").val();
+		t = $("#in_passwd").val();		
+		
+		a = "http://localhost:8015/api/users?phone="+ s + "&passwd=" + t + "&token=" + localStorage.getItem("wodejilu"); 
+		$.ajax(
+			{ url:a}
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了");
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				alert("Succeeded");
+				alert(obj.responseText);
+				
+				var c = JSON.parse(obj.responseText);
+				
+				if(c.code == 1000){
+					
+					
+					localStorage.setItem("wodejilu",c.token);
+					
+					alert("登陆成功");
+					
+				}else if(c.code == -2001){
+					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+	
 </script>
 <!-- start-smoth-scrolling -->
 <!-- start menu -->
@@ -77,13 +117,13 @@
 			<div class="col-md-6 log">
 					 <h3>登陆</h3>
 					 <div class="strip"></div>
-					 <form>
+					 <form onsubmit="return false;">
 						 <br>	
 						 <input type="text" id="in_username" placeholder="  用户名  " />
 						 <br>
 						 <input type="password" id="in_passwd" placeholder="  密码  " />	
 						 <br>				
-						 <input type="submit" value="登录" />
+						 <input type="submit" value="登录" onclick="denglu()" />
 					 </form>
 					<a href="#">忘记密码了 ? 点击这里</a>
 			</div>
