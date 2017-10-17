@@ -47,7 +47,7 @@
 		shangpin(productid);
 
 		function shangpin(productid){
-			var a = "http://localhost/api/commodity?action=find_good&commodity="+ productid;
+			var a = "/api/commodity?action=find_good&commodity="+ productid;
 			$.ajax(
 				{ url:a }
 			).fail(
