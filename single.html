@@ -5,8 +5,7 @@
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Pendent Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<meta name="keywords" content="Pendent Store Responsive web template" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
@@ -33,30 +32,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
-<link href='http://fonts.useso.com/css?family=Monda:400,700' rel='stylesheet' type='text/css'>
+
 </head>
 	
 <body>
 <!-- header -->
-	
+	<script>
+		var productid = GetQueryString("id");
+		if(parseInt(productid) <= 0){
+			productid = "1";
+		}						
+
+		var product_obj;
+		shangpin(productid);
+
+		function shangpin(productid){
+			var a = "http://localhost/api/commodity?action=find_good&commodity="+ productid;
+			$.ajax(
+				{ url:a }
+			).fail(
+				function(obj,n){
+					// 失败时执行
+					alert("失败了");
+				}
+			).done(
+				function(obj,n){
+					// 成功时执行
+					alert("Succeeded");
+					alert(obj);
+					console.log(obj);
+					var c = JSON.parse(obj);
+					if(c.code == 1000){
+						// c.
+						product_obj = c;
+						jQuery("#product_name").html(c.name);
+						jQuery("#product_half_name").html(c.keywords);
+						jQuery(".qwe").html("￥ " + c.price);
+					}else{
+						alert(c.msg);
+					}
+				}
+			);
+		}
+	</script>
+<!-- //header -->
+
 <!-- //header -->
 <!-- top-header -->
 <div class="top_bg">
 	<div class="container">
 		<div class="header_top-sec">
-			<div class="top_right">
-				<ul>
-					<li><a href="contact.html">Contact</a></li>|
-					<li><a href="login.html">Track Order</a></li>
-				</ul>
-			</div>
-			<div class="top_left">
-				<ul>
-					<li class="top_link">Email:<a href="mailto:info@example.com">info@example.com</a></li>|
-					<li class="top_link"><a href="login.html">My Account</a></li>					
-				</ul>
-			</div>
-			<div class="clearfix"> </div>
+			
+			
+		  <div class="clearfix"> </div>
 		</div>
 	</div>
 </div>
@@ -65,16 +93,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="header_top">
 	<div class="container">
 		<div class="logo">
-		 	<a href="index.html">Pendent Store</a>			 
+		 	<a href="index.html">萌多多私宠会馆</a>			 
 		</div>
 		<div class="header_right">
 			<div class="cart box_1">
 				<a href="checkout.html">
 				<h3> <div class="total">
-					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
+					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span>件)</div>
 					<img src="images/cart1.png" alt=""/></h3>
 				</a>
-				<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+				<p><a href="javascript:;" class="simpleCart_empty">购物车</a></p>
 				<div class="clearfix"> </div>
 			</div>				 
 		</div>
@@ -133,27 +161,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});
 			</script>
 		<div class="details-left-info">
-			<h3>autem quibusdam officiis debitis aut</h3>
-				<h4>Pellentesque pretium </h4>
+			<h3 id="product_name">autem quibusdam officiis debitis aut</h3>
+				<h4 id="product_half_name">Pellentesque pretium </h4>
 			<div class="simpleCart_shelfItem">
-				<p><span class="item_price qwe">$ 729</span> <a href="#">Click for offer</a></p>
+				<p><h2><span class="item_price qwe">￥ 729</span></h2> <a href="#">可用会员价</a></p>
 				<div class="col-rad">
 					<div class="col-rad-left">
 						<select class="arrival">
-							<option>Color</option>
-							<option>Green</option>
-							<option>Violet</option>
-							<option>Pink</option>
+							<option>重量</option>
 						</select>
 					</div>
 					<div class="col-rad-right">
 						<section>
 							<div class="row">
 								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio" checked=""><i></i>14Kt</label>
+									<label class="radio"><input type="radio" name="radio" checked=""><i></i>100g</label>
 								</div>
 								<div class="colr">
-									<label class="radio"><input type="radio" name="radio"><i></i>10Kt</label>
+									<label class="radio"><input type="radio" name="radio"><i></i>500g</label>
 								</div>
 							</div>						
 						</section>
@@ -162,33 +187,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="col-rad tyy">
 					<div class="col-rad-left">
-						<p>Diamond</p>
+						<p>配送方式</p>
 					</div>
 					<div class="col-rad-right">
 						<section>
 							<div class="row">
 								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio1" checked=""><i></i>SI GH</label>
+									<label class="radio"><input type="radio" name="radio1" checked=""><i></i>5公里送货上门</label>
 								</div>
 								<div class="colr">
-									<label class="radio"><input type="radio" name="radio1"><i></i>VS GH</label>
+									<label class="radio">
+									<input type="radio" name="radio1"><i></i>广东省内快递</label>
 								</div>
 								<div class="colr">
-									<label class="radio"><input type="radio" name="radio1"><i></i>VVS EF</label>
+									<label class="radio">
+									<input type="radio" name="radio1"><i></i>省外快递</label>
 								</div>
 							</div>						
 						</section>
 					</div>
 					<div class="clearfix"> </div>
 				</div>
-				<p class="qty">Qty ::</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
+				<p class="qty">数量 ：</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
 				<div class="single-but item_add">
-					<input type="submit" value="add to cart">
+					<input type="submit" value="添加至购物车">
 				</div>
 			</div>
 			<div class="flower-type">
-			<p>Model  ::<a href="#">Gem Stone</a></p>
-			<p>Carrets  ::<a href="#">22</a></p>
+			<p>商品类型  ：<a href="#">风干狗粮</a></p>
+			<p>适合体质 ：<a href="#">不限</a></p>
 			</div>
 			<p class="desc">Proin vestibulum scelerisque tempus. Phasellus at fermentum erat. Pellentesque mattis velit eget elit condimentum gravida. Donec vehicula mollis velit, a eleifend est hendrerit quis. Etiam pulvinar at ex eget cursus. Etiam luctus orci ut tortor rhoncus, sit amet faucibus lorem finibus. Nulla id ornare arcu. or lowest node and working upwards) are as follows:</p>
 		</div>
@@ -201,12 +228,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Description
+          商品介绍
         </a>
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
+      <div class="panel-body" id="product_intro">
         ****************************************************************************************************************************************************************************************************************************************************************************************************************
       </div>
     </div>
@@ -261,7 +288,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="col-md-4 related products-grid">
 			<img src="images/123.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline">**元</span> <span class="item_price val">**元</span></p>
+				<p><span class="overline"><span id="npricetag_2"></span>元</span> <span class="item_price val"><span id="pricetag_2"></span>元</span></p>
 				<div class="single-but item_add">
 					<input type="submit" value="添加到购物车">
 				</div>
@@ -270,7 +297,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="col-md-4 related products-grid">
 			<img src="images/02.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline">**元</span> <span class="item_price val">**元</span></p>
+				<p><span class="overline"><span id="npricetag_3"></span>元</span> <span class="item_price val"><span id="pricetag_3"></span>元</span></p>
 				<div class="single-but item_add">
 					<input type="submit" value="添加到购物车">
 				</div>
@@ -279,7 +306,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="col-md-4 related products-grid">
 			<img src="images/03.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline">**元</span> <span class="item_price val">**元</span></p>
+				<p><span class="overline"><span id="npricetag_4"></span>元</span> <span class="item_price val"><span id="pricetag_4"></span>元</span></p>
 				<div class="single-but item_add">
 					<input type="submit" value="添加到购物车">
 				</div>

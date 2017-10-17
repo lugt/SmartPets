@@ -31,7 +31,7 @@
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
-<link href='http://fonts.useso.com/css?family=Monda:400,700' rel='stylesheet' type='text/css'>
+
 <!-- the jScrollPane script -->
 <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
 		<script type="text/javascript" id="sourcecode">
@@ -428,6 +428,38 @@
 	  </div>
 </div>
 <!---->
+<script>
+liebiao();
+function liebiao(){
+	var a = "http://localhost/api/commodity?action=list_top&len=10";
+	$.ajax(
+		{ url:a }
+	).fail(
+		function(obj,n){
+			// 失败时执行
+			alert("失败了");
+		}
+	).done(
+		function(obj,n){
+			// 成功时执行
+			alert("Succeeded");
+			alert(obj);
+			console.log(obj);
+			var c = JSON.parse(obj);
+			if(c.code == 1000){
+				// c.
+				product_obj = c;
+				jQuery(".qwe").html("￥ " + 366);
+				jQuery(".qwe").html("￥ " + 366);
+				alert("商品加载成功");
+			}else{
+				alert(c.msg);
+			}
+		}
+	);
+}
+</script>
+
 <!-- products -->
 	<div class="products">
 		<div class="container">
@@ -439,7 +471,7 @@
 								<a href="single.html">
 										<img src="images/123.jpg" alt="" class="img-responsive" />
 										<div class="mask">
-											<span>Quick View</span>
+											<span>戳我查看</span>
 										</div>
 								</a>
 								<h4>鸡肉干</h4>
@@ -455,7 +487,7 @@
 								<a href="single.html">
 										<img src="images/123.jpg" alt="" class="img-responsive" />
 										<div class="mask">
-											<span>Quick View</span>
+											<span>戳我查看</span>
 										</div>
 								</a>
 								<h4>鸡肉干</h4>
@@ -470,13 +502,13 @@
 								<a href="single.html">
 										<img src="images/123.jpg" alt="" class="img-responsive" />
 										<div class="mask">
-											<span>Quick View</span>
+											<span>戳我查看</span>
 										</div>
 								</a>
 								<h4>鸡肉干</h4>
 								<p><a class="item_add" href="#"><i></i> <span class=" item_price valsa">￥102/700g</span></a></p>
 								<div class="pro-grd">
-									<a href="single.html">10% Off</a>
+									<a href="single.html">折上 7.9 折！</a>
 								</div>
 							</div>	
 						</div>
