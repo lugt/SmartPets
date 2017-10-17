@@ -88,9 +88,12 @@
 				if(c.code == 1000){
 					console.log(c);
 					$("#out_username").html(c.name);
-					
 					$("#out_phone").html(c.phone.substring(0,3) + "****"+c.phone.substring(7,11));
 				}else{
+					if(c.code == -2010){
+						location.href="login.html";
+						localStorage.setItem("token","ssp");	
+					}
 					alert(c.msg);
 					localStorage.setItem("token","ssp");
 				}
