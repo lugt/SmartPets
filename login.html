@@ -5,8 +5,9 @@
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="application/x-javascript"> 
+	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -32,7 +33,7 @@
 		s = $("#in_username").val();
 		t = $("#in_passwd").val();		
 		
-		a = "http://localhost:8015/api/users?phone="+ s + "&passwd=" + t + "&token=" + localStorage.getItem("wodejilu"); 
+		a = "/api/users?action=quick&phone="+ s + "&pass=" + t;
 		$.ajax(
 			{ url:a }
 		).fail(
@@ -43,19 +44,15 @@
 		).done(
 			function(obj,n){
 				// 成功时执行
-				alert("Succeeded");
-				alert(obj.responseText);
-				
-				var c = JSON.parse(obj.responseText);
-				
+				//alert("Succeeded");
+				//alert(obj);
+				console.log(obj);
+				var c = JSON.parse(obj);
 				if(c.code == 1000){
-					
-					
-					localStorage.setItem("wodejilu",c.token);
-					
+					localStorage.setItem("smart_token",c.token);
 					alert("登陆成功");
-					
-				}else if(c.code == -2001){
+					top.location.href="usercenter.html";
+				}else{
 					alert(c.msg);
 				}
 			}
@@ -119,7 +116,7 @@
 					 <div class="strip"></div>
 					 <form onsubmit="return false;">
 						 <br>	
-						 <input type="text" id="in_username" placeholder="  用户名  " />
+						 <input type="text" id="in_username" placeholder="  手机号  " />
 						 <br>
 						 <input type="password" id="in_passwd" placeholder="  密码  " />	
 						 <br>				
