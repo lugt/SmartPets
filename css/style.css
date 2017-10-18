@@ -854,7 +854,10 @@ p.non span{
 	padding:1.5em 0 0;
 }
 .jwe a img {
-  margin: 0 auto 1.5em;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0.5em;
+	margin-left: auto;
 }
 .prd img {
   margin: 0 auto;
