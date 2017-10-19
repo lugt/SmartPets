@@ -25,7 +25,10 @@
 		});
 	});
 	
-	
+	var page = GetQueryString("goto");
+	if(page == null || page == undefined(){
+		page = "usercenter.html";
+	}	
 	
 	function zhuce(){
 		var a,n,t;
@@ -50,8 +53,7 @@
 				if(c.code == 1000){
 					localStorage.setItem("smart_token",c.token);
 					alert("注册成功咯！");
-					if()
-					top.location.href="usercenter.html";
+					top.location.href=page;
 				}else{
 					alert(c.msg);
 				}
