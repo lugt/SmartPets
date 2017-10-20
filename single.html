@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Single</title>
+<title>萌多多私宠会馆 - 在线下单 - 5公里送货上门</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Pendent Store Responsive web template" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
@@ -41,8 +40,16 @@
 			productid = "1";
 		}						
 
-		var product_obj;
+		var product_obj = null;
 		shangpin(productid);
+		
+		function addToCart(){
+			if(product_obj == null){
+				return;
+			}
+			var now = simpleCart.add({ name: product_obj.name , price: product_obj.price, img:product_obj.img, id:productid, quantity: $("#quantity").val()});
+			if(now !=null)alert("添加成功！");
+		}
 
 		function shangpin(productid){
 			var a = "/api/commodity?action=find_good&commodity="+ productid;
@@ -71,7 +78,7 @@
 							jQuery("#product_intro").html(c.description);	
 						}
 						jQuery("#pass_img")[0].src=c.img;
-						jQuery(".item_prd_id").html(productid);
+						jQuery(".item_id").html(productid);
 						jQuery(".item_img").html(c.img);
 									// Can also be used with $(document).ready()
 						$(window).load(function() {
@@ -160,16 +167,11 @@
 							<option>重量</option>
 						</select>
 					</div>
-                    <div class="item_prd_id" style="display:none;">1</div>
-                    <div class="item_img" style="display:none;">images/123.jpg</div>
 					<div class="col-rad-right">
 						<section>
 							<div class="row">
 								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio" checked=""><i></i>100g</label>
-								</div>
-								<div class="colr">
-									<label class="radio"><input type="radio" name="radio"><i></i>500g</label>
+									<label class="radio"><input type="radio" name="radio" checked="checked"><i></i>100g</label>
 								</div>
 							</div>						
 						</section>
@@ -184,15 +186,7 @@
 						<section>
 							<div class="row">
 								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio1" checked=""><i></i>5公里送货上门</label>
-								</div>
-								<div class="colr">
-									<label class="radio">
-									<input type="radio" name="radio1"><i></i>广东省内快递</label>
-								</div>
-								<div class="colr">
-									<label class="radio">
-									<input type="radio" name="radio1"><i></i>省外快递</label>
+									<label class="radio"><input type="radio" name="radio1" checked=""><i></i>5公里送货上门/其他地区快递</label>
 								</div>
 							</div>						
 						</section>
@@ -200,8 +194,8 @@
 					<div class="clearfix"> </div>
 				</div>
 				<p class="qty">数量 ：</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
-				<div class="single-but item_add">
-					<input type="submit" value="添加至购物车">
+				<div class="single-but item_adder">
+					<input type="submit" value="添加至购物车" onclick="addToCart(this)">
 				</div>
 			</div>
 			<div class="flower-type">

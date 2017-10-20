@@ -33,6 +33,64 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
+
+<script>
+	var token = localStorage.getItem("smart_token");
+	if(token == "ssp" || token == null || token.length < 10){
+		location.href="login.html";
+	}
+	var orderId = GetQueryString("id");
+	if(orderId == null){
+		location.href="orderlist.html";
+	}
+	$(document).ready(function(){
+		get_order();
+		$("#topay_btn")[0].href = "pay.html?id="+orderId;
+	});
+	
+	function addThis(c){
+		var goods = JSON.parse(c.order.commodity);
+		var len = goods.length, i = 0;
+		$("#productprice").html(c.order.orderprice.toFixed(2) + "  ￥");
+		$("#promotions").html("<b style='color:#AC9D5D'>-"+c.order.promote.toFixed(2)+"￥</b>");			
+		$("#deliveryfee").html(c.order.freight.toFixed(2)+"  ￥");	
+		$("#counted_price").html("<span>"+c.order.due.toFixed(2)+" ￥</span>");
+		$("#payamount").html(c.order.due.toFixed(2)+" ￥");
+		var k = new Date(c.order.createTime);
+		$("#create_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
+		if(c.order.packTime != "0" && c.order.packTime != c.order.createTime){
+			k = new Date(c.order.packTime);
+			$("#send_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
+		}else{
+			$("#send_time").html("尚未发货");
+		}
+	}
+	
+	function get_order(){
+		var a = "/api/orders?action=find_one&order="+orderId+"&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					addThis(c);
+				}else{
+					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+</script>
 </head>
 	
 <body>
@@ -71,49 +129,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //logo-cart -->
 <!-- check-out -->
 <div class="container">
-	<div class="check">	 
+	<div class="check">	
+	
+		<div class="col-md-9 cart-items">
+			<h2>支付金额：<b id="payamount"></b></h2>
+			<a class="continue" href="#">微信支付</a>
+			<h3>长按下面的收款码</h3>
+			<h3>选择识别图中二维码支付</h3>
+			<div class="cart-header">
+				<div class="cart-sec simpleCart_shelfItem">
+						<img src="images/wepay.gif" style="max-width:300px"/>
+				 </div>
+			</div>
+		</div> 
 		<div class="col-md-3 cart-total">
-			<a class="continue" href="#">订单信息</a>
+			<a class="continue" href="#">收货地址</a>
 			<div class="price-details">
+            <p>收货人：<span id="rsvPers"></span></p>
+            <p>手机号：<span id="rsvTel"></span></p>
+            <p>地址：<span id="rsvAddr"></span></p>
+			</div>            
+			<a class="continue" href="#">订单信息</a>
+   			<div class="price-details">
 				<h3>价格详情</h3>
 				<span>商品价格</span>
-				<span class="total1">6200.00</span>
-				<span>微信支付立减</span>
-				<span class="total1">0.1元</span>
+				<span class="total1" id="productprice">XXXX ￥</span>
+				<span>优惠</span>
+				<span class="total1" id="promotions">- XXXX￥</span>
+				<span>物流费用</span>
+				<span class="total1" id="deliveryfee"></span>
 				<div class="clearfix"></div>				 
 			</div>	
 			<ul class="total_price">
-			   <li class="last_price"> <h4>尚需支付总计</h4></li>	
-			   <li class="last_price"><span>128.80</span></li>
+			   <li class="last_price"> <h4>待支付金额</h4></li>	
+			   <li class="last_price" id="counted_price"><span>XXXX</span></li>
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
 			<a class="order" href="#">支付遇到问题？</a>
-		</div>
-		<div class="col-md-9 cart-items">
-		  <h2>长按下面的收款码</h2>
-		  <h3>选择识别图中二维码支付</h3>
-		  <script>$(document).ready(function(c) {
-					$('.close1').on('click', function(c){
-						$('.cart-header').fadeOut('slow', function(c){
-							$('.cart-header').remove();
-						});
-						});	  
-					});
-		   </script>
-			<div class="cart-header">
-				<div class="cart-sec simpleCart_shelfItem">
-						<img src="images/wepay.jpg"/>
-				 </div>
+			<div class="total-item">
+				<h3>创建时间</h3>
+				<h4 id="create_time"></h4>
+				<h3>发货时间</h3>
+				<h4 id="send_time"></h4>
 			</div>
-			<script>$(document).ready(function(c) {
-					$('.close2').on('click', function(c){
-							$('.cart-header2').fadeOut('slow', function(c){
-						$('.cart-header2').remove();
-					});
-					});	  
-					});
-			</script>
 		</div>
 		<div class="clearfix"> </div>
 	</div>

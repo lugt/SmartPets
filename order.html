@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Checkout</title>
+<title>萌多多私宠会馆 - 在线下单 - 5公里送货上门</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Pendent Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
@@ -33,6 +31,91 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
+
+<script>
+	var token = localStorage.getItem("smart_token");
+	if(token == "ssp" || token == null || token.length < 10){
+		location.href="login.html";
+	}
+	var orderId = GetQueryString("id");
+	if(orderId == null){
+		location.href="orderlist.html";
+	}
+	$(document).ready(function(){
+		get_order();
+		$("#topay_btn")[0].href = "pay.html?id="+orderId;
+	});
+	
+	function addThis(c){
+		var goods = JSON.parse(c.order.commodity);
+		var len = goods.length, i = 0;
+		var innerT = "";
+		for(i=0;i<len;i++){
+				var price = "订单内商品-"+goods[i].id,cname = "商品信息正在加载";
+				var cquant = goods[i].q,cid = goods[i].id;
+				var cimg = "images/123.jpg";
+				innerT += '<div class="cart-header">'+
+			'<div class="cart-sec simpleCart_shelfItem">' +
+'						<div class="cart-item cyc">'+
+'							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
+'						</div>'+
+'                           <h3>'+cname+'</h3>'+
+'					   <div class="cart-item-info">'+
+'							<ul class="qty">'+
+'								<li><p>数量 : '+cquant+'</p></li>'+
+'							</ul>'+
+'							<div class="delivery">'+
+'								 <span>正在安排发货</span>'+
+'								 <div class="clearfix"></div>'+
+'							</div>	'+
+'							<div class="fgh">'+
+'								<a href="single.html?id='+cid+'">点击查看商品</a>'+
+'							</div>'+
+'					   </div>'+
+'					   <div class="clearfix"></div>											'+
+'				  </div>'+
+'			 </div>';
+		}
+		innertT = $("#order-mm-items").html() + innerT;
+		$("#order-mm-items").html(innerT);
+		$("#productprice").html(c.order.orderprice.toFixed(2) + "  ￥");
+		$("#promotions").html("<b style='color:#AC9D5D'>-"+c.order.promote.toFixed(2)+"￥</b>");			
+		$("#deliveryfee").html(c.order.freight.toFixed(2)+"  ￥");	
+		$("#counted_price").html("<span>"+c.order.due.toFixed(2)+" ￥</span>");
+		var k = new Date(c.order.createTime);
+		$("#create_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
+		if(c.order.packTime != "0" && c.order.packTime != c.order.createTime){
+			k = new Date(c.order.packTime);
+			$("#send_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
+		}else{
+			$("#send_time").html("尚未发货");
+		}
+	}
+	
+	function get_order(){
+		var a = "/api/orders?action=find_one&order="+orderId+"&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					addThis(c);
+				}else{
+					alert(c.msg);
+				}
+			}
+		);
+	}
+</script>
 </head>
 	
 <body>
@@ -72,84 +155,41 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- check-out -->
 <div class="container">
 	<div class="check">	 
+	
+		<div class="col-md-9 cart-items" id="order-mm-items">
+		  <h1>订单详情</h1>	
+		</div>
 		<div class="col-md-3 cart-total">
-			<div class="simpleCart_items"></div>
-			<a class="continue" href="#">订单信息</a>
+  			<a class="continue" href="#">收货地址</a>
 			<div class="price-details">
+            <p>收货人：<span id="rsvPers"></span></p>
+            <p>手机号：<span id="rsvTel"></span></p>
+            <p>地址：<span id="rsvAddr"></span></p>
+			</div>            
+			<a class="continue" href="#">订单信息</a>
+   			<div class="price-details">
 				<h3>价格详情</h3>
 				<span>商品价格</span>
-				<span class="total1">6200.00</span>
+				<span class="total1" id="productprice">62.00 ￥</span>
 				<span>优惠</span>
-				<span class="total1">优惠10%</span>
-				<span>快递运输费用（五公里内免运费）</span>
-				<span class="total1">150.00</span>
+				<span class="total1" id="promotions">- 0.2￥</span>
+				<span>物流费用</span>
+				<span class="total1" id="deliveryfee"></span>
 				<div class="clearfix"></div>				 
 			</div>	
 			<ul class="total_price">
-			   <li class="last_price"> <h4>应付费用</h4></li>	
-			   <li class="last_price"><span>6150.00</span></li>
+			   <li class="last_price"> <h4>支付金额</h4></li>	
+			   <li class="last_price" id="counted_price"><span>61.50</span></li>
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
-			<a class="order" href="#">前往支付</a>
+			<a class="order" href="#" id="topay_btn">前往支付</a>
 			<div class="total-item">
-				<h3>选择</h3>
-				<h4>优惠券</h4>
-				<a class="cpns" href="#">使用优惠券</a>
+				<h3>创建时间</h3>
+				<h4 id="create_time"></h4>
+				<h3>发货时间</h3>
+				<h4 id="send_time"></h4>
 			</div>
-		</div>
-		<div class="col-md-9 cart-items">
-		  <h1>订单详情</h1>
-		  <script>$(document).ready(function(c) {
-					$('.close1').on('click', function(c){
-						$('.cart-header').fadeOut('slow', function(c){
-							$('.cart-header').remove();
-						});
-						});	  
-					});
-			   </script>
-			<div class="cart-header">
-				<div class="cart-sec simpleCart_shelfItem">
-						<div class="cart-item cyc">
-							<img src="images/123.jpg" class="img-responsive" alt=""/>
-						</div>
-					   <div class="cart-item-info" style="margin-top:0px">
-					     <h3>鸡排干脆</h3>
-					     <ul class="qty">
-						   <li><p>数量 : 5</p></li>
-								<li><p>重量: 1</p></li>
-							</ul>
-							<div class="delivery">
-								<span>将在两天之内送达</span>
-							</div>
-					   </div>											
-				  </div>
-			 </div>
-			 <script>$(document).ready(function(c) {
-					$('.close2').on('click', function(c){
-							$('.cart-header2').fadeOut('slow', function(c){
-						$('.cart-header2').remove();
-					});
-					});	  
-					});
-			 </script>
-			<div class="cart-header2">
-					<div class="cart-sec simpleCart_shelfItem">
-						<div class="cart-item cyc">
-							 <img src="images/03.jpg" class="img-responsive" alt=""/>
-						</div>
-					    <div class="cart-item-info" style="margin-top:0px">
-							<h3>鸡肉干</h3>
-							<ul class="qty">
-								<li><p>数量 : 5</p></li>
-								<li><p>重量: 1</p></li>
-							</ul>
-							<div class="delivery">
-								<span>将在两天之内送达</span>
-							</div>	
-					   </div>				
-				    </div>
-			</div>		
 		</div>
 		<div class="clearfix"> </div>
 	</div>
