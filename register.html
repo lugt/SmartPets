@@ -111,27 +111,25 @@
 </div>
 <!-- //logo-cart -->
 <!-- reg-form -->
-	<div class="reg-form">
+	<div class="login">
 		<div class="container">
-			<div class="reg" style="font-size:17px">
-				<h3>注册</h3>
-				 <form onSubmit="return false;">
-				 
-					<ul>
-						<li class="text-info">手机号： </li>
-						<li><input type="text" id="in_phone" placeholder="在这里输入"></li>
-					 </ul>				
-					<ul>
-						<li class="text-info">收货人姓名： </li>
-						<li><input type="text" id="in_name"  placeholder="在这里输入"></li>
-					</ul> 
-					<ul>
-						<li class="text-info">密码: </li>
-						<li><input type="password" id="in_password" placeholder="在这里输入"></li>
-					</ul>	
-					<input type="submit" value="现在注册" onclick="zhuce()">
-					<p class="click">请确认您已经同意我们的《使用条款》</p> 
-				</form>
+			<div class="login-grids">
+				<div class="log col-md-6" style="font-size:17px">
+					<h3>注册</h3>
+					 <form onSubmit="return false;">
+						手机号： <input type="text" id="in_phone" placeholder="在这里输入"><br>
+							收货人姓名： <input type="text" id="in_name"  placeholder="在这里输入">							<br>密码:
+							<input type="password" id="in_password" placeholder="在这里输入">
+						<input type="submit" value="现在注册" onclick="zhuce()">
+						<p class="click">我们十分重视您的隐私，因此我们会尽可能少的收集您的信息。<br>并且承诺不会将您的信息发送至任何第三方《使用条款》</p> 
+					</form>
+				</div>
+				<div class="col-md-6 login-right">
+				  <h3>老用户登录</h3>
+				  <div class="strip"></div>
+				  <p>已经是我们的会员？ 现在登录吧！</p>
+				  <a href="login.html" class="button">立即登录</a>
+			  </div>
 			</div>
 		</div>
 	</div>

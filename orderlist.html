@@ -93,7 +93,7 @@
 	}
 	
 	function get_order(){
-		var a = "/api/orders?action=find_one&order="+orderId+"&token="+token;
+		var a = "/api/orders?action=find_uid&token="+token;
 		$.ajax(
 			{ url:a }
 		).fail(
