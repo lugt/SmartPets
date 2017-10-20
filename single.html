@@ -62,7 +62,7 @@
 					if(c.code == 1000){
 						// c.
 						product_obj = c;
-						jQuery("#product_name").html(c.name);
+						jQuery(".item_name").html(c.name);
 						jQuery("#product_half_name").html(c.keywords);
 						jQuery(".qwe").html("￥ " + c.price);
 						if(c.description == null || c.description == undefined){
@@ -71,8 +71,8 @@
 							jQuery("#product_intro").html(c.description);	
 						}
 						jQuery("#pass_img")[0].src=c.img;
-						jQuery("#item_prd_id").html(productid);
-						jQuery("#item_img").html(c.img);
+						jQuery(".item_prd_id").html(productid);
+						jQuery(".item_img").html(c.img);
 									// Can also be used with $(document).ready()
 						$(window).load(function() {
 						  $('.flexslider').flexslider({
@@ -151,9 +151,8 @@
 			<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 		<div class="details-left-info">
 			<div class="simpleCart_shelfItem">
-				<h3 id="product_name item_name">autem debus</h3>
+				<h3 id="product_name" class="item_name">autem debus</h3>
 				<h4 id="product_half_name">Pretium 系列精选优质商品 </h4>
-                <p style="display:none;"></p>
 				<p><h2><span class="item_price qwe">￥ 88888</span></h2> <a href="#">可用会员价</a></p>
 				<div class="col-rad">
 					<div class="col-rad-left">
