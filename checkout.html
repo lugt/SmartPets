@@ -128,6 +128,9 @@
 				if(c.code == 1000){
 					location.href="order.html?id="+c.order;
 				}else{
+					if(c.code == -1015){
+						location.href="user.html?goto=checkout.html";
+					}
 					alert(c.msg);
 				}
 			}).fail(function (obj,s){
