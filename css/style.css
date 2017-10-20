@@ -992,7 +992,7 @@ p.non span{
 .cart-item-info{
 	width:75%;
 	float:left;
-	margin-top: 3em;
+	/*margin-top: 3em;*/
 }
 .check{
 	padding:5em 0 0;
@@ -1014,7 +1014,7 @@ p.non span{
   width:100%;
 }
 .delivery {
-  margin: 3em 0;
+  /*margin: 3em 0;*/
 }
 .delivery p {
   color: #A6A6A6;

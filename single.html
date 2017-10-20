@@ -71,6 +71,15 @@
 							jQuery("#product_intro").html(c.description);	
 						}
 						jQuery("#pass_img")[0].src=c.img;
+						jQuery("#item_prd_id").html(productid);
+						jQuery("#item_img").html(c.img);
+									// Can also be used with $(document).ready()
+						$(window).load(function() {
+						  $('.flexslider').flexslider({
+							animation: "slide",
+							controlNav: "thumbnails"
+						  });
+						});
 					}else{
 						alert(c.msg);
 					}
@@ -116,13 +125,13 @@
 	 <div class="container">
 		 <div class="menu_sec">
 		 <!-- start header menu -->
-		 
+		<!-- 
 			<div class="search">
 				 <form>
 					<input type="text" value="" placeholder="搜索...">
 					<input type="submit" value="">
 					</form>
-			</div>
+			</div>-->
 			<div class="clearfix"></div>
 		 </div>
 	  </div>
@@ -140,27 +149,20 @@
 			<!-- FlexSlider -->
 			  <script defer src="js/jquery.flexslider.js"></script>
 			<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-
-				<script>
-			// Can also be used with $(document).ready()
-			$(window).load(function() {
-			  $('.flexslider').flexslider({
-				animation: "slide",
-				controlNav: "thumbnails"
-			  });
-			});
-			</script>
 		<div class="details-left-info">
-			<h3 id="product_name">autem debus</h3>
-				<h4 id="product_half_name">Pretium 系列精选优质商品 </h4>
 			<div class="simpleCart_shelfItem">
-				<p><h2><span class="item_price qwe">￥ 88888/8</span></h2> <a href="#">可用会员价</a></p>
+				<h3 id="product_name item_name">autem debus</h3>
+				<h4 id="product_half_name">Pretium 系列精选优质商品 </h4>
+                <p style="display:none;"></p>
+				<p><h2><span class="item_price qwe">￥ 88888</span></h2> <a href="#">可用会员价</a></p>
 				<div class="col-rad">
 					<div class="col-rad-left">
 						<select class="arrival">
 							<option>重量</option>
 						</select>
 					</div>
+                    <div class="item_prd_id" style="display:none;">1</div>
+                    <div class="item_img" style="display:none;">images/123.jpg</div>
 					<div class="col-rad-right">
 						<section>
 							<div class="row">

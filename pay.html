@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>购物车 - 萌多多私宠会馆 - 在线下单 - 5公里送货上门</title>
+<title>二维码 支付</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="application/x-javascript"> 
-	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-	function hideURLbar(){ window.scrollTo(0,1); } </script>
+<meta name="keywords" content="Pendent Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -33,6 +34,7 @@
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
 </head>
+	
 <body>
 <!-- header -->
 	
@@ -71,90 +73,47 @@
 <div class="container">
 	<div class="check">	 
 		<div class="col-md-3 cart-total">
-			<div class="simpleCart_itemss"></div>
-  			<a class="continue" href="#">收货地址</a>
-			<div class="price-details">
-            <p>收货人：<span id="rsvPers"></span></p>
-            <p>手机号：<span id="rsvTel"></span></p>
-            <p>地址：<span id="rsvAddr"></span></p>
-			</div>            
 			<a class="continue" href="#">订单信息</a>
-   			<div class="price-details">
-			<h3>价格详情</h3>
-			<span>商品价格</span>
-			<span class="total1" id="productprice">62.00 ￥</span>
-			<span>优惠</span>
-			<span class="total1" id="">- 0.2￥</span>
-			<span>快递运输费用（五公里内上门）</span>
-			<span class="total1" id="deliveryfee"></span>
-			<div class="clearfix"></div>				 
+			<div class="price-details">
+				<h3>价格详情</h3>
+				<span>商品价格</span>
+				<span class="total1">6200.00</span>
+				<span>微信支付立减</span>
+				<span class="total1">0.1元</span>
+				<div class="clearfix"></div>				 
 			</div>	
 			<ul class="total_price">
-			   <li class="last_price"> <h4>应付费用</h4></li>	
-			   <li class="last_price"><span>61.50</span></li>
+			   <li class="last_price"> <h4>尚需支付总计</h4></li>	
+			   <li class="last_price"><span>128.80</span></li>
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
-			<a class="order" href="#" onclick="doCheckout()">提交订单</a>
-			<div class="total-item">
-				<h3>选择</h3>
-				<h4>优惠券</h4>
-				<a class="cpns" href="#">获得优惠券</a>
-			</div>
+			<a class="order" href="#">支付遇到问题？</a>
 		</div>
-        <script>
-		function doCheckout(){
-			
-		}
-		simpleCart.ready( function(){
-			addThis();
-		});
-		function addThis(){
-			var goods = simpleCart.find();
-			var len = goods.length;
-			var i = 1;
-			var innerT = "";
-			for(i=0;i<len;i++){
-					var price = goods[i].fields().price;
-					var cquant = goods[i].fields().quantity;
-					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
-					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
-					innerT += '<div class="cart-header">'+
-				'<div class="close'+i+'" onclick="rmvProduct('+i+')"> </div>'+
-				'<div class="cart-sec simpleCart_shelfItem">' +
-'						<div class="cart-item cyc">'+
-'							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
-'						</div>'+
-'                           <h3>'+cname+'</h3>'+
-'					   <div class="cart-item-info">'+
-'							<ul class="qty">'+
-'								<li><p>数量 : '+cquant+'</p></li>'+
-'							</ul>'+
-'							<div class="delivery">'+
-'								 <span>下单后立即发货</span>'+
-'								 <div class="clearfix"></div>'+
-'							</div>	'+
-'							<div class="fgh">'+
-'								<a href="#">查看商品</a>'+
-'							</div>'+
-'					   </div>'+
-'					   <div class="clearfix"></div>											'+
-'				  </div>'+
-'			 </div>';
-					}
-			innertT = $("#cart-mm-items").html() + innerT;
-			$("#cart-mm-items").html(innerT);
-		}
-		function rmvProduct(i){
-					// 删除Cart数据
-					// 删除div
-					$('.cart-header').fadeOut('slow', function(c){
-						$('.cart-header').remove();
+		<div class="col-md-9 cart-items">
+		  <h2>长按下面的收款码</h2>
+		  <h3>选择识别图中二维码支付</h3>
+		  <script>$(document).ready(function(c) {
+					$('.close1').on('click', function(c){
+						$('.cart-header').fadeOut('slow', function(c){
+							$('.cart-header').remove();
+						});
+						});	  
 					});
-		}
-		</script>
-		<div class="col-md-9 cart-items" id="cart-mm-items">
-			<h1>购物车</h1>
+		   </script>
+			<div class="cart-header">
+				<div class="cart-sec simpleCart_shelfItem">
+						<img src="images/wepay.jpg"/>
+				 </div>
+			</div>
+			<script>$(document).ready(function(c) {
+					$('.close2').on('click', function(c){
+							$('.cart-header2').fadeOut('slow', function(c){
+						$('.cart-header2').remove();
+					});
+					});	  
+					});
+			</script>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
