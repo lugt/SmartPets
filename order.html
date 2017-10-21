@@ -76,7 +76,7 @@
 '				  </div>'+
 '			 </div>';
 		}
-		innertT = $("#order-mm-items").html() + innerT;
+		innerT = "<h1>订单详情</h1>" + innerT;
 		$("#order-mm-items").html(innerT);
 		$("#productprice").html(c.order.orderprice.toFixed(2) + "  ￥");
 		$("#promotions").html("<b style='color:#AC9D5D'>-"+c.order.promote.toFixed(2)+"￥</b>");			
@@ -159,8 +159,7 @@
 <div class="container">
 	<div class="check">	 
 	
-		<div class="col-md-9 cart-items" id="order-mm-items">
-		  <h1>订单详情</h1>	
+		<div class="col-md-9 cart-items" id="order-mm-items">		  
 		</div>
 		<div class="col-md-3 cart-total">
   			<a class="continue" href="#">收货地址</a>
