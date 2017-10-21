@@ -2811,7 +2811,7 @@ label.radio {
 	  margin: 1.5em 0 2em;
 	}
 	a.continue, a.order {
-	  width: 70%;
+	  width: 100%;/*70%;*/
 	}
 	.callbacks_nav {
 		display: none;

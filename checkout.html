@@ -35,37 +35,7 @@
 </head>
 <body>
 <!-- header -->
-	
-<!-- //header -->
-<!-- top-header -->
-<div class="top_bg">
-	<div class="container">
-		<div class="header_top-sec">
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-</div>
-<!-- top-header -->
-<!-- logo-cart -->
-<div class="header_top">
-	<div class="container">
-		<div class="logo">
-		 	<a href="index.html">萌多多私宠会馆</a>			 
-		</div>
-		<div class="header_right">
-			<div class="cart box_1">
-				<a href="checkout.html">
-				<h3> <div class="total">
-					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> 商品)</div>
-					<img src="images/cart1.png" alt=""/></h3>
-				</a>
-				<p><a href="javascript:;" class="simpleCart_empty">购物车</a></p>
-				<div class="clearfix"> </div>
-			</div>				 
-		</div>
-		<div class="clearfix"></div>	
-	</div>
-</div>
+<script>show_top_header();</script>
 <!-- //logo-cart -->
 <!-- check-out -->
 <div class="container">
@@ -74,13 +44,12 @@
 		<div class="col-md-9 cart-items" id="cart-mm-items">
 			<h1>购物车</h1>
 		</div>
-		<div class="col-md-3 cart-total">
+		<div class="col-md-3 cart-total" style="font-size:1.2em">
 			<div class="simpleCart_itemss"></div>
   			<a class="continue" href="#">收货地址</a>
 			<div class="price-details">
-            <p>收货人：<span id="rsvPers"></span></p>
-            <p>手机号：<span id="rsvTel"></span></p>
-            <p>地址：<span id="rsvAddr"></span></p>
+				<p><a href="address.html">修改收货地址</a></p>
+				<p> 网某某 188****5552 广东省深圳市南山区昂周路92号C座快递柜</p>
 			</div>            
 			<a class="continue" href="#">订单信息</a>
    			<div class="price-details">
@@ -101,14 +70,15 @@
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
-			<a class="order" href="#" onclick="doCheckout()">提交订单</a>
-			<div class="total-item">
+			<a class="order" id="press_order" href="#" onclick="doCheckout()">提交订单</a>
+			<!--div class="total-item">
 				<h3>选择</h3>
 				<h4>优惠券</h4>
 				<a class="cpns" href="#">获得优惠券</a>
-			</div>
+			</div-->
 		</div>
         <script>
+		var sumOfMoney = 0.0;
 		var token = localStorage.getItem("smart_token");
 		if(token == "ssp"){
 			location.href="login.html";
@@ -119,6 +89,10 @@
 			var data = [];
 			for(i=0;i<len;i++){
 				data.push({q:goods[i].fields().quantity,model:1,id:goods[i].fields().id});
+			}
+			if(sumOfMoney <= 0.01){
+				alert("请先选购商品哦");
+				return false;
 			}
 			var url = '/api/orders?action=create&token='+token+'&payment=2&delivery=2&addr=2&products=' + encodeURI(JSON.stringify(data));
 			$.ajax({url:url}).done(function(obj,s){
@@ -145,11 +119,10 @@
 			var len = goods.length;
 			var i = 1;
 			var innerT = "";
-			var sumofMoney = 0.0;
 			for(i=0;i<len;i++){
 					var price = goods[i].fields().price;
 					var cquant = goods[i].fields().quantity;
-					sumofMoney += cquant * price;
+					sumOfMoney += cquant * price;
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
 					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
 					innerT += '<div class="cart-header">'+
@@ -174,13 +147,19 @@
 '					   <div class="clearfix"></div>											'+
 '				  </div>'+
 '			 </div>';
-					}
-			innertT = $("#cart-mm-items").html() + innerT;
+			}
+			if(innerT == "" || innerT == null){
+				innerT = "<p>还没有商品哦</p><p> <a href='index.html#recommends'>立即去选购商品吧</a>！</p><br><br>"
+			}
+			innerT = $("#cart-mm-items").html() + innerT;
 			$("#cart-mm-items").html(innerT);
-			$("#productprice").html(sumofMoney.toFixed(2)+" ￥");
+			$("#productprice").html(sumOfMoney.toFixed(2)+" ￥");
 			$("#promotions").html("<b style='color:#AC9D5D'>金卡立减</b>");			
 			$("#deliveryfee").html(parseInt("0").toFixed(2)+"  ￥");	
-			$("#counted_price").html("<span>"+sumofMoney.toFixed(2)+" ￥</span>");
+			$("#counted_price").html("<span>"+sumOfMoney.toFixed(2)+" ￥</span>");
+			if(sumOfMoney <= 0.01){
+				$("#press_order").hide();
+			}
 		}
 		function rmvProduct(i){
 					// 删除Cart数据
@@ -195,43 +174,7 @@
 </div>
 <!-- //check-out -->
 <!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-3 footer-grid">
-				<h6>关于我们</h6>
-				<p>我们致力于制造优质健康天然的手工宠物食品，并现已取得卓越成果，通过层层甄选优质原料，以传统的手工方式制成放心的宠物食品。</p>
-			</div>
-			<div class="col-md-3 footer-grid">
-				<h6>信息</h6>
-				<ul>
-					<li><a href="contact.html">关于我们</a></li>
-					<li><a href="contact.html">推送消息</a></li>
-					<li><a href="contact.html">隐私政策</a></li>
-					
-				</ul>
-			</div>
-			<div class="col-md-3 footer-grid">
-			  <h6>其他</h6>
-				<ul>
-					<li><a href="single.html?id=3">品牌</a></li>
-					<li><a href="usercenter.html">AVP会员卡</a></li>
-					
-				</ul>
-			</div>
-			<div class="clearfix">
-			  <div class="col-md-3 footer-grid">
-			    <h6>我的账户</h6>
-			    <ul>
-			      <li><a href="usercenter.html">我的账户</a></li>
-			      <li><a href="orderlist.html">订单记录</a></li>
-		        </ul>
-		      </div>
-			</div>
-		</div>
-	</div>
-	<div class="footer-copy">
-		<p>Copyright &copy; 2018.Company name </p>
-	</div>
+<script> smart_showfooter(); </script>
 <!-- //footer -->
 </body>
 </html>

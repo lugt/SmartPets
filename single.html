@@ -98,54 +98,10 @@
 
 <!-- //header -->
 <!-- top-header -->
-<div class="top_bg">
-	<div class="container">
-		<div class="header_top-sec">
-		  <div class="clearfix"> </div>
-		</div>
-	</div>
-</div>
-<!-- top-header -->
-<!-- logo-cart -->
-<div class="header_top">
-	<div class="container">
-		<div class="logo">
-		 	<a href="index.html">萌多多私宠会馆</a>			 
-		</div>
-		<div class="header_right">
-			<div class="cart box_1">
-				<a href="checkout.html">
-				<h3> <div class="total">
-					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span>件)</div>
-					<img src="images/cart1.png" alt=""/></h3>
-				</a>
-				<p><a href="javascript:;" class="simpleCart_empty">购物车</a></p>
-				<div class="clearfix"> </div>
-			</div>				 
-		</div>
-		<div class="clearfix"></div>	
-	</div>
-</div>
-<!-- //logo-cart -->
-<!------>
-<div class="mega_nav">
-	 <div class="container">
-		 <div class="menu_sec">
-		 <!-- start header menu -->
-		<!-- 
-			<div class="search">
-				 <form>
-					<input type="text" value="" placeholder="搜索...">
-					<input type="submit" value="">
-					</form>
-			</div>-->
-			<div class="clearfix"></div>
-		 </div>
-	  </div>
-</div>
+<script>show_top_header();</script>
 <!---->
 <!-- single-page -->
-<div class="single">
+<div class="single" style="padding:0px;">
 <div class="container">
 	<div class="single-page">					 
 		<div class="flexslider details-lft-inf">
@@ -158,11 +114,11 @@
 			<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 		<div class="details-left-info">
 			<div class="simpleCart_shelfItem">
-				<h3 id="product_name" class="item_name">autem debus</h3>
-				<h4 id="product_half_name">Pretium 系列精选优质商品 </h4>
-				<p><h2><span class="item_price qwe">￥ 88888</span></h2> <a href="#">可用会员价</a></p>
+				<h3 id="product_name" class="item_name" style="font-size: 1.5em;">autem debus</h3>
+				<h4 id="product_half_name"> </h4>
+				<p><h2><span class="item_price qwe" style="font-size: 1.2em;">￥ 88888</span></h2> <a href="#" style="font-size: 1.2em;">Pretium 精选价</a></p>
 				<div class="col-rad">
-					<div class="col-rad-left">
+					<!--<div class="col-rad-left">
 						<select class="arrival">
 							<option>重量</option>
 						</select>
@@ -175,7 +131,7 @@
 								</div>
 							</div>						
 						</section>
-					</div>
+					</div>-->
 					<div class="clearfix"> </div>
 				</div>
 				<div class="col-rad tyy">
@@ -194,13 +150,14 @@
 					<div class="clearfix"> </div>
 				</div>
 				<p class="qty">数量 ：</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
-				<div class="single-but item_adder">
-					<input type="submit" value="添加至购物车" onclick="addToCart(this)">
+				<a class="order" onclick="addToCart(this)" style="width:90%;color:#fff;font-size:1em;padding:0.6em;max-width:600px">添加至购物车</a>
+				<div class="single-but item_adder" style="width:70%;">
+					
 				</div>
 			</div>
 			<div class="flower-type">
-			<p>商品类型  ：<a href="#">风干狗粮</a></p>
-			<p>适合体质 ：<a href="#">不限</a></p>
+				<p>商品类型  ：<a href="#">风干狗粮</a></p>
+				<p>适合体质 ：<a href="#">不限</a></p>
 			</div>
 			<p class="desc">此产品承诺不满意全额退款</p>
 		</div>
@@ -239,15 +196,15 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
           客户反馈
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        158****2316：是真的五公里内免费配送，商家送货速度超快的
-        
+        158****2316：商家送货还是真的快
+        <br>176****1891：不知道好不好，先试试看吧，包装不错。
       </div>
     </div>
   </div>
@@ -257,23 +214,28 @@
 	<div class="related-products">
 		<h3>相关的产品</h3>
 		<div class="col-md-4 related products-grid">
+			<a href="single.html?id=3">
 			<img src="images/123.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
 				<p><span class="overline"><span id="npricetag_2"></span>32元</span> <span class="item_price val"><span id="pricetag_2"></span>16元</span></p>
-				
 			</div>
+			</a>
 		</div>
 		<div class="col-md-4 related products-grid">
+			<a href="single.html?id=5">
 			<img src="images/02.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline"><span id="npricetag_3"></span>32元</span> <span class="item_price val"><span id="pricetag_3"></span>16元</span></p>
+				<p><span class="overline"><span id="npricetag_3"></span>7元</span> <span class="item_price val"><span id="pricetag_3"></span>4元</span></p>
 			</div>
+			</a>
 		</div>
 		<div class="col-md-4 related products-grid">
+			<a href="single.html?id=6">
 			<img src="images/03.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
 				<p><span class="overline"><span id="npricetag_4"></span>32元</span> <span class="item_price val"><span id="pricetag_4"></span>16元</span></p>
 			</div>
+			</a>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
@@ -282,43 +244,7 @@
 </div>
 <!-- single -->
 <!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-3 footer-grid">
-				<h6>关于我们</h6>
-				<p>我们致力于制造优质健康天然的手工宠物食品，并现已取得卓越成果，通过层层甄选优质原料，以传统的手工方式制成放心的宠物食品。</p>
-			</div>
-			<div class="col-md-3 footer-grid">
-				<h6>信息</h6>
-				<ul>
-					<li><a href="contact.html">关于我们</a></li>
-					<li><a href="contact.html">推送消息</a></li>
-					<li><a href="contact.html">隐私政策</a></li>
-					
-				</ul>
-			</div>
-			<div class="col-md-3 footer-grid">
-			  <h6>其他</h6>
-				<ul>
-					<li><a href="single.html?id=3">品牌</a></li>
-					<li><a href="usercenter.html">AVP会员卡</a></li>
-					
-				</ul>
-			</div>
-			<div class="clearfix">
-			  <div class="col-md-3 footer-grid">
-			    <h6>我的账户</h6>
-			    <ul>
-			      <li><a href="usercenter.html">我的账户</a></li>
-			      <li><a href="orderlist.html">订单记录</a></li>
-		        </ul>
-		      </div>
-			</div>
-		</div>
-	</div>
-	<div class="footer-copy">
-		<p>Copyright &copy; 2018.Company name </p>
-	</div>
+<script>smart_showfooter();</script>
 <!-- //footer -->
 </body>
 </html>

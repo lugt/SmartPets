@@ -98,45 +98,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 <body>
 <!-- header -->
-	
-<!-- //header -->
-<!-- top-header -->
-<div class="top_bg">
-	<div class="container">
-		<div class="header_top-sec">
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-</div>
-<!-- top-header -->
-<!-- logo-cart -->
-<div class="header_top">
-	<div class="container">
-		<div class="logo">
-		 	<a href="index.html">萌多多私宠会馆</a>			 
-		</div>
-		<div class="header_right">
-			<div class="cart box_1">
-				<a href="checkout.html">
-				<h3> <div class="total">
-					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> 商品)</div>
-					<img src="images/cart1.png" alt=""/></h3>
-				</a>
-				<p><a href="javascript:;" class="simpleCart_empty">购物车</a></p>
-				<div class="clearfix"> </div>
-			</div>				 
-		</div>
-		<div class="clearfix"></div>	
-	</div>
-</div>
-<!-- //logo-cart -->
+	<script>show_top_header();</script>
 <!-- check-out -->
 <div class="container">
 	<div class="check">	
 	
 		<div class="col-md-9 cart-items">
 			<h2>支付金额：<b id="payamount"></b></h2>
-			<a class="continue" href="#">微信支付</a>
+			<a class="order" style="background: #34B414">微信支付</a>
+			<center>
 			<h3>长按下面的收款码</h3>
 			<h3>选择识别图中二维码支付</h3>
 			<div class="cart-header">
@@ -144,32 +114,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<img src="images/wepay.gif" style="max-width:300px"/>
 				 </div>
 			</div>
+			</center>
 		</div> 
 		<div class="col-md-3 cart-total">
-			<a class="continue" href="#">收货地址</a>
-			<div class="price-details">
-            <p>收货人：<span id="rsvPers"></span></p>
-            <p>手机号：<span id="rsvTel"></span></p>
-            <p>地址：<span id="rsvAddr"></span></p>
-			</div>            
-			<a class="continue" href="#">订单信息</a>
-   			<div class="price-details">
-				<h3>价格详情</h3>
-				<span>商品价格</span>
-				<span class="total1" id="productprice">XXXX ￥</span>
-				<span>优惠</span>
-				<span class="total1" id="promotions">- XXXX￥</span>
-				<span>物流费用</span>
-				<span class="total1" id="deliveryfee"></span>
-				<div class="clearfix"></div>				 
-			</div>	
 			<ul class="total_price">
 			   <li class="last_price"> <h4>待支付金额</h4></li>	
 			   <li class="last_price" id="counted_price"><span>XXXX</span></li>
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
-			<a class="order" href="#">支付遇到问题？</a>
+			<a class="order" href="#" style="background:#f65a5b">支付遇到问题？</a>
 			<div class="total-item">
 				<h3>创建时间</h3>
 				<h4 id="create_time"></h4>
@@ -182,43 +136,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </div>
 <!-- //check-out -->
 <!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-3 footer-grid">
-				<h6>关于我们</h6>
-				<p>我们致力于制造优质健康天然的手工宠物食品，并现已取得卓越成果，通过层层甄选优质原料，以传统的手工方式制成放心的宠物食品。</p>
-			</div>
-			<div class="col-md-3 footer-grid">
-				<h6>信息</h6>
-				<ul>
-					<li><a href="contact.html">关于我们</a></li>
-					<li><a href="contact.html">推送消息</a></li>
-					<li><a href="contact.html">隐私政策</a></li>
-					
-				</ul>
-			</div>
-			<div class="col-md-3 footer-grid">
-			  <h6>其他</h6>
-				<ul>
-					<li><a href="single.html?id=3">品牌</a></li>
-					<li><a href="usercenter.html">AVP会员卡</a></li>
-					
-				</ul>
-			</div>
-			<div class="clearfix">
-			  <div class="col-md-3 footer-grid">
-			    <h6>我的账户</h6>
-			    <ul>
-			      <li><a href="usercenter.html">我的账户</a></li>
-			      <li><a href="orderlist.html">订单记录</a></li>
-		        </ul>
-		      </div>
-			</div>
-		</div>
-	</div>
-	<div class="footer-copy">
-		<p>Copyright &copy; 2018.Company name </p>
-	</div>
+<script>smart_showfooter();</script>
 <!-- //footer -->
 </body>
 </html>
