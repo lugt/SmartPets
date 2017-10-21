@@ -24,9 +24,6 @@
 			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
 		});
 	});
-	
-	
-	
 	function denglu(){
 		var a,s,t;
 		
@@ -50,8 +47,12 @@
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
 					localStorage.setItem("smart_token",c.token);
-					alert("登陆成功");
-					top.location.href="usercenter.html";
+					var t = GetQueryString("goto");
+					if(t != null){
+						top.location.href=t;
+					}else{
+						top.location.href="usercenter.html";
+					}
 				}else{
 					alert(c.msg);
 				}
