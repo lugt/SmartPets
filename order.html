@@ -110,6 +110,9 @@
 					console.log(c);
 					addThis(c);
 				}else{
+					if(c.code == -1015){
+						location.href="login.html";
+					}
 					alert(c.msg);
 				}
 			}
