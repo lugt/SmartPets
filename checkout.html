@@ -41,8 +41,8 @@
 	
 	function show_order(v){
 		if(v == 0){ /* 并没有任何的地址 */
-			return;
 			$("#addr_comb").html("您还没有设置收货地址，先去设置吧");
+			return;
 		}		
 		var a = "/api/delivery?action=address_get&addrid="+v+"&token="+token;
 		$.ajax(
@@ -123,9 +123,10 @@
 			<div class="simpleCart_itemss"></div>
   			<a class="continue" href="#">收货地址</a>
 			<div class="price-details">
-				<p><a href="address.html">修改收货地址</a></p>
-				<p id="addr_comb"> 网某某 XXX****XXX 广东省深圳市南山区昂周路92号C座快递柜</p>
+				<p><a href="address.html?goback=checkout.html">修改收货地址</a></p>
+				<p id="addr_comb"> 正在加载收货地址</p>
 			</div>            
+			<br>
 			<a class="continue" href="#">订单信息</a>
    			<div class="price-details">
 			<h3>价格详情</h3>
