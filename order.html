@@ -43,6 +43,7 @@
 	}
 	$(document).ready(function(){
 		get_order();
+		get_user_orders();
 		$("#topay_btn")[0].href = "pay.html?id="+orderId;
 	});
 	
@@ -143,6 +144,78 @@
 			}
 		);
 	}
+	
+	function showByAddr(ad){
+		var c = ad.mobile.toString();
+		$("#addr_comb").html(decodeURI(ad.rsvr) +"  "+ c.substring(0,3) + "****" + c.substring(7) +"   "+decodeURI(ad.addr));
+	}
+	
+	function show_order(v){
+		if(v == 0){ /* 并没有任何的地址 */
+			return;
+			location.href = "address.html";
+		}		
+		var a = "/api/delivery?action=address_get&addrid="+v+"&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					var addr = c.addr;
+					showByAddr(addr);
+				}else{
+					if(c.code == -1015){
+						location.href="login.html?goto=address.html";
+					}
+					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+	var defaultadd = 0;
+	
+	function get_user_orders(){
+		var a = "/api/delivery?action=user_addrs&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					defaultadd = c.default;
+					show_order(c.default);
+				}else{
+					if(c.code == -7003){
+						// 没有任何id
+						location.href="address.html";
+					}else{
+						if(c.code == -1015){
+							location.href="login.html?goto=address.html";
+						}
+						alert(c.msg);
+					}
+				}
+			}
+		);
+	}	
 </script>
 </head>
 	
@@ -176,6 +249,7 @@
 			
   			<a class="continue">收货地址</a>
 			<div class="price-details">
+			
 			</div>        
 			<div class="total-item">
 				<h3>创建时间</h3>

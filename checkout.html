@@ -32,6 +32,81 @@
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
+<script>
+	
+	function showByAddr(ad){
+		var c = ad.mobile.toString();
+		$("#addr_comb").html(decodeURI(ad.rsvr) +"  "+ c.substring(0,3) + "****" + c.substring(7) +"   "+decodeURI(ad.addr));
+	}
+	
+	function show_order(v){
+		if(v == 0){ /* 并没有任何的地址 */
+			return;
+			$("#addr_comb").html("您还没有设置收货地址，先去设置吧");
+		}		
+		var a = "/api/delivery?action=address_get&addrid="+v+"&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					var addr = c.addr;
+					showByAddr(addr);
+				}else{
+					if(c.code == -1015){
+						location.href="login.html?goto=address.html";
+					}
+					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+	var defaultadd = 0;
+	
+	function get_user_addrs(){
+		var a = "/api/delivery?action=user_addrs&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					defaultadd = c.default;
+					show_order(c.default);
+				}else{
+					if(c.code == -7003){
+						// 没有任何id
+						defaultadd = 0;
+						show_order(0);
+					}else{
+						if(c.code == -1015){
+							location.href="login.html?goto=address.html";
+						}
+						alert(c.msg);
+					}
+				}
+			}
+		);
+	}	
+</script>
 </head>
 <body>
 <!-- header -->
@@ -49,15 +124,15 @@
   			<a class="continue" href="#">收货地址</a>
 			<div class="price-details">
 				<p><a href="address.html">修改收货地址</a></p>
-				<p> 网某某 188****5552 广东省深圳市南山区昂周路92号C座快递柜</p>
+				<p id="addr_comb"> 网某某 XXX****XXX 广东省深圳市南山区昂周路92号C座快递柜</p>
 			</div>            
 			<a class="continue" href="#">订单信息</a>
    			<div class="price-details">
 			<h3>价格详情</h3>
 			<span>商品价格</span>
-			<span class="total1" id="productprice">62.00 ￥</span>
+			<span class="total1" id="productprice">XXXX ￥</span>
 			<span>优惠</span>
-			<span class="total1" id="promotions">- 0.2￥</span>
+			<span class="total1" id="promotions">- XXX￥</span>
 			<span class="total1">优惠额度</span>
 			<span>下单后可见</span>
 			<span>物流费用</span>
@@ -66,7 +141,7 @@
 			</div>	
 			<ul class="total_price">
 			   <li class="last_price"> <h4>商品总计</h4></li>	
-			   <li class="last_price" id="counted_price"><span>61.50</span></li>
+			   <li class="last_price" id="counted_price"><span>XXXX</span></li>
 			   <div class="clearfix"> </div>
 			</ul> 
 			<div class="clearfix"></div>
@@ -84,6 +159,10 @@
 			location.href="login.html";
 		}
 		function doCheckout(){
+			if(defaultadd == 0){
+				location.href = "address.html?goback=checkout.html";
+			}
+			
 			var goods = simpleCart.find();
 			var len = goods.length;
 			var data = [];
@@ -94,7 +173,7 @@
 				alert("请先选购商品哦");
 				return false;
 			}
-			var url = '/api/orders?action=create&token='+token+'&payment=2&delivery=2&addr=2&products=' + encodeURI(JSON.stringify(data));
+			var url = '/api/orders?action=create&token='+token+'&payment=2&delivery=2&addr='+defaultadd+'&products=' + encodeURI(JSON.stringify(data));
 			$.ajax({url:url}).done(function(obj,s){
 				// OK				
 				console.log(obj);
@@ -113,6 +192,7 @@
 		}
 		simpleCart.ready( function(){
 			addThis();
+			get_user_addrs();
 		});
 		function addThis(){
 			var goods = simpleCart.find();

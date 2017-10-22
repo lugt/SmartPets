@@ -5,8 +5,6 @@
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Pendent Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
@@ -35,36 +33,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/simpleCart.min.js"> </script>
 
 <script>
+	
 	var token = localStorage.getItem("smart_token");
+	var userAddrs = [];
+	
 	if(token == "ssp" || token == null || token.length < 10){
 		location.href="login.html";
 	}
 	
 	$(document).ready(function(){
-		get_order();
-		$("#topay_btn")[0].href = "pay.html?id="+orderId;
+		get_user_orders();
 	});
 	
-	function addThis(c){
-		var goods = JSON.parse(c.order.commodity);
-		var len = goods.length, i = 0;
-		$("#productprice").html(c.order.orderprice.toFixed(2) + "  ￥");
-		$("#promotions").html("<b style='color:#AC9D5D'>-"+c.order.promote.toFixed(2)+"￥</b>");			
-		$("#deliveryfee").html(c.order.freight.toFixed(2)+"  ￥");	
-		$("#counted_price").html("<span>"+c.order.due.toFixed(2)+" ￥</span>");
-		$("#payamount").html(c.order.due.toFixed(2)+" ￥");
-		var k = new Date(c.order.createTime);
-		$("#create_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
-		if(c.order.packTime != "0" && c.order.packTime != c.order.createTime){
-			k = new Date(c.order.packTime);
-			$("#send_time").html(k.toLocaleDateString() + k.toLocaleTimeString());
-		}else{
-			$("#send_time").html("尚未发货");
-		}
-	}
 	
-	function get_order(){
-		var a = "/api/orders?action=find_one&order="+orderId+"&token="+token;
+	function save_user_addrs(addrid,num){
+		var caddr1 = (num == 0)?addrid:0;
+		var caddr2 = (num == 1)?addrid:0;
+		var caddr3 = (num == 2)?addrid:0;
+		var caddr4 = (num == 3)?addrid:0;
+		var a = "/api/delivery?action=user_set_addrs&addr1="+caddr1+"&addr2="+caddr2+"&addr3="+caddr3+"&addr4="+caddr4+"&token="+token;
 		$.ajax(
 			{ url:a }
 		).fail(
@@ -79,12 +66,138 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
 					console.log(c);
-					addThis(c);
+					alert("保存成功！");
+					if(GetQueryString("goback") != null){
+						location.href=GetQueryString("goback");
+					}
 				}else{
-					if(c.code == -1015){<br>
+					alert(c.msg);
+				}
+		});
+	}
+	
+	function save_addr(){
+		// 保存当前的地址，并且要把地址保存到用户的指定地址中去
+		var cty = $("#city").val();
+		var cphone = $("#in_phone").val();
+		var caddr = encodeURI($("#in_addr").val());
+		var crsv = encodeURI($("#in_rsver").val());
+		var a = "/api/delivery?action=address_set&dst="+0+"&prv="+0+"&city="+cty+"&addr="+caddr+"&rsver="+crsv+"&phone="+cphone+"&token="+token;
+		$.ajax(
+			{ url:a ,k:nowAddrId}
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					save_user_addrs(c.addrid,this.k)				
+				}else{
+					if(c.code == -1015){
 						location.href="login.html?goto=address.html";
 					}
 					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+	// 下面这个变量实际上是改地址在用户地址列表中的顺序
+	var nowAddrId = 0;
+	function showByAddr(ad){
+		if(ad.city == 1){
+			$("#pls_futian").attr("selected","true");
+		}else{
+			$("#pls_autre").attr("selected","true");
+		}
+		$("#in_rsver").val(decodeURI(ad.rsvr));
+		$("#in_phone").val(ad.mobile);
+		$("#in_addr").val(decodeURI(ad.addr));
+	}
+	
+	function moveTo(num){
+		nowAddrId = num;
+		show_order(userAddrs[num]);
+	}
+	
+	function show_order(v){
+		
+		$("#saverbtn").val("保存地址-" + (nowAddrId+1));
+		
+		if(v == 0){ /* 并没有任何的地址 */
+			return;
+		}
+		
+		var a = "/api/delivery?action=address_get&addrid="+v+"&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					var addr = c.addr;
+					showByAddr(addr);
+				}else{
+					if(c.code == -1015){
+						location.href="login.html?goto=address.html";
+					}
+					alert(c.msg);
+				}
+			}
+		);
+	}
+	
+	function get_user_orders(){
+		var a = "/api/delivery?action=user_addrs&token="+token;
+		$.ajax(
+			{ url:a }
+		).fail(
+			function(obj,n){
+				// 失败时执行
+				alert("失败了" + obj + n);
+			}
+		).done(
+			function(obj,n){
+				// 成功时执行
+				console.log(obj);
+				var c = JSON.parse(obj);
+				if(c.code == 1000){
+					console.log(c);
+					userAddrs.push(c.addr1);
+					userAddrs.push(c.addr2);
+					userAddrs.push(c.addr3);
+					userAddrs.push(c.addr4);
+					nowAddrId = 0;
+					show_order(c.addr1);
+				}else{
+					if(c.code == -7003){
+						// 没有任何id
+						userAddrs.push(0);
+						userAddrs.push(0);
+						userAddrs.push(0);
+						userAddrs.push(0);
+						nowAddrId = 0;
+						show_order(0);
+					}else{
+						if(c.code == -1015){
+							location.href="login.html?goto=address.html";
+						}
+						alert(c.msg);
+					}
 				}
 			}
 		);
@@ -105,25 +218,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					 <div class="strip"></div>
 					 <form onsubmit="return false;">
 						 <br>	
-						 <input type="text" id="in_username" placeholder="  收货人  " />
+						 <input type="text" id="in_rsver" placeholder="  收货人  " />
 						 <br>
-						 <input type="text" id="in_username" placeholder="  手机号  " />
-						 城市：
-						 <select name="">
-						 	
-						 </select>
+						 <input type="text" id="in_phone" placeholder="  手机号  " />
+						 <br><span style="margin-left: 10px">地区：</span>
+						<select name="city" id="city" class="arrival">
+							<option value="1" id="pls_futian">深圳福田</option>
+							<option value="2" id="pls_autre">其他地区</option>
+						</select>
 						 <br>
-						 <input type="password" id="in_passwd" placeholder="  地址  " />	
+						 <br>
+						 <input type="text" id="in_addr" placeholder="  地址  " />	
 						 <br>				
-						 <input type="submit" value="登录" onclick="denglu()" />
+						 <input type="submit" value="保存地址-1" id="saverbtn" onclick="save_addr()" />
 					 </form>
-					<a href="#">忘记密码了 ? 点击这里</a>
 			</div>
 			<div class="col-md-6 login-right">
-					<h3>新会员注册</h3>
-					<div class="strip"></div>
-					<p>通过注册成为萌多多私宠馆的会员，您可以自由地在本网站购物。</p>
-					<a href="register.html" class="button">注册成为会员</a>
+			  <h3>用户的收货地址列表</h3>
+			  <div class="strip"></div>
+			  <p>默认地址 ( 1 )</p>
+			  <a class="button" onclick="moveTo(0)">编辑此地址</a>
+			  <p>地址 ( 2 )</p>
+			  <a class="button" onclick="moveTo(1)">编辑此地址</a>
+			  <p>地址 ( 3 )</p>
+			  <a class="button" onclick="moveTo(2)">编辑此地址</a>
+			  <p>地址 ( 4 )</p>
+			  <a class="button" onclick="moveTo(3)">编辑此地址</a>
 			</div>
 			<div class="clearfix"></div>
 		</div>
