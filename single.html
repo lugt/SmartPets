@@ -82,10 +82,10 @@
 						jQuery(".item_img").html(c.img);
 									// Can also be used with $(document).ready()
 						$(window).load(function() {
-						  $('.flexslider').flexslider({
+						  /*$('.flexslider').flexslider({
 							animation: "slide",
 							controlNav: "thumbnails"
-						  });
+						  });*/
 						});
 					}else{
 						alert(c.msg);
@@ -106,7 +106,8 @@
 	<div class="single-page">					 
 		<div class="flexslider details-lft-inf">
 			<ul class="slides" style="height:279px">
-				<li data-thumb="images/1569.jpg" id="thumber1"><img id="pass_img" src="images/1569.jpg" /></li>
+				<img id="pass_img" src="images/1569.jpg" style="height:100%;width:100%;"/>
+				<!--li data-thumb="images/1569.jpg" id="thumber1"></li-->
 			</ul>
 		</div>
 			<!-- FlexSlider -->
