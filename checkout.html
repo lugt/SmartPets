@@ -33,7 +33,6 @@
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
 <script>
-	
 	function showByAddr(ad){
 		var c = ad.mobile.toString();
 		$("#addr_comb").html(decodeURI(ad.rsvr) +"  "+ c.substring(0,3) + "****" + c.substring(7) +"   "+decodeURI(ad.addr));
@@ -162,7 +161,7 @@
 		function doCheckout(){
 			if(defaultadd == 0){
 				location.href = "address.html?goback=checkout.html";
-			}
+			}		
 			
 			var goods = simpleCart.find();
 			var len = goods.length;
