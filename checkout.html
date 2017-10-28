@@ -161,6 +161,7 @@
 		function doCheckout(){
 			if(defaultadd == 0){
 				location.href = "address.html?goback=checkout.html";
+				return;
 			}		
 			
 			var goods = simpleCart.find();
