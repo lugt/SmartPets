@@ -754,13 +754,13 @@ p.non span{
 	background-position:108px !important;
 }
 .welcome:before{
-	background: url(../images/5.png) no-repeat 0px 40px;
+	background: url(../images/77.png) no-repeat 0px 40px;
 	display: block;
 	content: '';
 	width: 360px;
 }
 .welcome:after{
-	background: url(../images/6.png) no-repeat 0px -20px;
+	background: url(../images/78.png) no-repeat 0px -20px;
 	display: block;
 	content: '';
 	width: 455px;
@@ -2265,7 +2265,7 @@ label.radio {
 	  min-height: 300px;
 	}
 	.welcome:before {
-		background: url(../images/5.png) no-repeat -36px 40px;
+		background: url(../images/77.png) no-repeat -36px 40px;
 	}
 	.wel a {
 	  width: 32%;
@@ -2470,12 +2470,12 @@ label.radio {
 	  min-height: 311px;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -36px 40px;
+	  background: url(../images/77.png) no-repeat -36px 40px;
 	  background-size: 158%;
 	  width: 200px;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -15px 0px;
+	  background: url(../images/78.png) no-repeat -15px 0px;
 	  width: 230px;
 	  background-size: 120%;
 	}
@@ -2627,7 +2627,7 @@ label.radio {
 	  width: 60%;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -35px 40px;
+	  background: url(../images/77.png) no-repeat -35px 40px;
 	  background-size: 158%;
 	  width: 125px;
 	}
@@ -2635,7 +2635,7 @@ label.radio {
 	  width: 100%;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -15px 0px;
+	  background: url(../images/78.png) no-repeat -15px 0px;
 	  width: 160px;
 	  background-size: 120%;
 	}
@@ -2842,12 +2842,12 @@ label.radio {
 	  min-height: 250px;
 	}
 	.welcome:before {
-	  background: url(../images/5.png) no-repeat -20px 40px;
+	  background: url(../images/77.png) no-repeat -20px 40px;
 	  background-size: 150%;
 	  width: 100px;
 	}
 	.welcome:after {
-	  background: url(../images/6.png) no-repeat -9px 0px;
+	  background: url(../images/78.png) no-repeat -9px 0px;
 	  width: 100px;
 	  background-size: 120%;
 	}
