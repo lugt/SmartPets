@@ -205,8 +205,9 @@
 					sumOfMoney += cquant * price;
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
 					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
+				
+				/*'<div class="close'+i+'" onclick="rmvProduct('+i+')"> </div>'+*/
 					innerT += '<div class="cart-header">'+
-				'<div class="close'+i+'" onclick="rmvProduct('+i+')"> </div>'+
 				'<div class="cart-sec simpleCart_shelfItem">' +
 '						<div class="cart-item cyc">'+
 '							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
