@@ -872,7 +872,7 @@ p.non span{
 	display: none;
 	position: absolute;
 	top: 35%;
-	left: 27%;
+	left: 32%;
 }
 .mask span{
 	background:#204056;
@@ -2279,8 +2279,8 @@ label.radio {
 		font-size: 13px;
 	}
 	.mask {
-	  top: 34%;
-		left: 20%;
+	    top: 34%;
+		left: 40%;
 	}
 	.head-para {
 		top: 18%;
@@ -2504,7 +2504,7 @@ label.radio {
 		margin-bottom: 2em;
 	}
 	.mask {
-	  top: 36%;
+	  top: 23%;
 	  left:31%;
 	}
 	label.radio {
@@ -2601,7 +2601,7 @@ label.radio {
 }
 @media (max-width:640px){
 	.mask {
-	  left:26%;
+	  left:30%; top:17%;
 	}
 	.logo a {
 	  font-size: 1.8em;
@@ -2888,7 +2888,8 @@ label.radio {
 	  margin-bottom: 1em;
 	}
 	.mask {
-	  left:28%;
+	  left:33%;
+	  top:14%;
 	}
 	.details-lft-inf {
 	  float: none;
@@ -3044,6 +3045,7 @@ label.radio {
 	}
 	.mask {
 	  left: 34%;
+	  top:27%;
 	}
 	.product-one:nth-child(2) {
 	  margin: 0;
