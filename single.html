@@ -72,6 +72,7 @@
 						jQuery(".item_name").html(c.name);
 						jQuery("#product_half_name").html(c.keywords);
 						jQuery(".qwe").html("￥ " + c.price);
+						jQuery("secondDescriptor").html(c.weight + "g / Pretium 精选价格");
 						if(c.description == null || c.description == undefined){
 							jQuery("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
 						}else{
@@ -118,7 +119,7 @@
 			<div class="simpleCart_shelfItem">
 				<h3 id="product_name" class="item_name" style="font-size: 1.5em;">autem debus</h3>
 				<h4 id="product_half_name"> </h4>
-				<p><h2><span class="item_price qwe" style="font-size: 1.2em;">￥ 88888</span></h2> <a href="#" style="font-size: 1.2em;">Pretium 精选价</a></p>
+				<p><h2><span class="item_price qwe" style="font-size: 1.2em;">￥ 88888</span></h2> <a href="#" style="font-size: 1.2em;" id="secondDescriptor">Pretium 精选价</a></p>
 				<div class="col-rad">
 					<!--<div class="col-rad-left">
 						<select class="arrival">
