@@ -80,6 +80,7 @@
 						jQuery("#pass_img")[0].src=c.img;
 						jQuery(".item_id").html(productid);
 						jQuery(".item_img").html(c.img);
+						jQuery("#weightIndicator").html(" "+c.weight+"克");
 									// Can also be used with $(document).ready()
 						$(window).load(function() {
 						  /*$('.flexslider').flexslider({
@@ -159,6 +160,7 @@
 			</div>
 			<div class="flower-type">
 				<p>商品类型  ：<a href="#">风干狗粮</a></p>
+				<p>产品规格  ：<a href="#" id="weightIndicator">*****g</a></p>
 				<p>适合体质 ：<a href="#">不限</a></p>
 			</div>
 			<p class="desc">此产品承诺不满意全额退款</p>
