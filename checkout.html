@@ -246,12 +246,12 @@
 		function rmvProduct(i){
 					// 删除Cart数据
 					// 删除div
-			$('.cart-t'+i).fadeOut('slow', function(c){
+			/*$('.cart-t'+i).fadeOut('slow', function(c){
 						$('.cart-t'+i).remove();
-			});
-			
+			});*/
 			var objs = simpleCart.find();
 			objs[i].remove();
+			location.reload();
 		}
 		</script>
 		<div class="clearfix"> </div>
