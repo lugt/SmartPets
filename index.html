@@ -45,12 +45,11 @@
 <!-- cate-bottom -->
 	<div class="cate-bottom">
 		<div class="container">
-			<div class="cate-bottom-info">
-				<h3>超值特惠</h3>
-				<p>萌多多私宠会馆现推出全新商品，在原有商品的基础之上加入了新奇工艺，使食物新鲜又美味！！！
-				<span>五公里 免费上门</span></p>
-				<div class="buy let">
-					<a href="address.html">填写地址</a>
+			<div class="cate-bottom-info" style="color: #fbf73d;">
+				<h3 style="color: #fbfbfb;">超值特惠</h3>
+				<p style="color: #fbf7d3;">萌多多私宠会馆现推出全新商品，在原有商品的基础之上加入了新奇工艺，使食物新鲜又美味！！！ <span style="color: #fbf73d;">部分地区免费上门</span></p>
+				<div class="buy let" style="color: #fbf73d;">
+					<a href="javascript:void">机不可失</a>
 				</div>
 			</div>
 		</div>
@@ -59,47 +58,12 @@
 <!-- banner-bottom1 -->
 <!-- //banner-bottom1 -->
 <!-- banner-bottom -->
-	<div class="banner-bottom">
+	<div class="card">
 		<div class="container"> 
 			<div class="product-one">
-		  		<script>
-					
-				function makeOne(single){
-					var k = ''+
-					'<div class="col-md-3 col-sm-6 product-left">\
-						<a href="single.html?id='+single.commodity+'">\
-						<div class="p-one simpleCart_shelfItem jwe"> \
-							<img src="'+single.smallimg+'" alt="" class="img-responsive" />\
-							<!--<div class="mask"> <span> 掌柜推荐 !</span> </div>-->\
-							\
-							<a name="recommends"></a>\
-							<div class="product-left-cart">\
-								<div class="product-left-cart-l">\
-								  <p><a class="item_llo" href="single.html?id='+single.commodity+'">\
-									<i></i> <span class=" item_price">'+single.name+' &nbsp; ￥'+single.price+'</span></a>\
-								  </p>\
-								</div>\
-								<div class="clearfix"> </div>\
-							</div>\
-						</div>\
-						</a>\
-					</div>';
-					return k;
-				}
-				function dealGoodsRet(obj, status){
-					if(typeof(obj) == "string"){
-						obj = JSON.parse(obj);
-					}
-					var x = "";
-					for(i=0;i<obj.length;i++){
-						x += makeOne(obj[i]);
-					}
-					$(".product-one").html(x);
-				}
-				$.ajax({url:"/api/commodity?action=list_top&len=4"}).success(dealGoodsRet);
-				</script>
 				<div class="clearfix"> </div>
 			</div>
+			<script>getPostergoods('.product-one',4);</script>
 		</div>
 	</div>
 <!-- //banner-bottom -->
@@ -110,16 +74,17 @@
 				<h3>限时优惠</h3>
 				<p class="non">限时降价，手慢则无<span>快为爱宠购买心爱的食品吧！</span></p>
 				<p class="rep">纯天然手工制作无危害更适合宠物体质</p>
-				<div class="buy wel"><a href="usercenter.html">申请会员卡</a></div>
+				<div class="buy wel"><a href="usercenter.html">领取金卡</a></div>
 			</div>
 		</div>
 	</div>
 	
 	<div class="col-12" style="padding-top:2em">
 		<div class="container">
-			<div class="">
+			<div class="something-neat">
 			  <a href="single.html?id=13"> <img src="images/poster_1.jpg"/></a>
 			  <a href="single.html?id=3"> <img src="images/poster_2.jpg"/></a>
+				<a href="single.html?id=6"> <img src="images/poster_3.jpg"/></a>
 			</div>
 		</div>
 	</div>

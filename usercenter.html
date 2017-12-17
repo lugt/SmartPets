@@ -10,9 +10,13 @@
 <!-- //for-mobile-apps -->
 <script src="js/disp.footer.js"></script>
 <!-- js -->
-<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="js/jquery-1.11.1.min.js"></script>-->
 <!-- //js -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!--<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="js/move-top.js"></script>
@@ -73,114 +77,56 @@
 	}
 </script>
 </head>
-	
+
 <body>
-<!-- header -->
-<script>show_top_header();</script>
-<!-- //header -->
-<!---->
+<!-- header --> 
+<script>show_top_header();</script> 
+<!-- //header --> 
+<!----> 
 <!-- login-page -->
-<div class="container" style="background:#1c1c1c;padding:30px 0; margin-bottom: 30px;">
-		<div class="welcome-info">
-			<h3 style="color:#efd03a">萌多多金卡会员</h3>
-			<p class="non"><span>快为爱宠购买心爱的食品吧！</span></p>
-			<p class="rep">纯天然手工制作无危害更适合宠物体质</p>
-			<div class="buy wel">
-				<a href="single.html?id=3">专属礼遇</a>
-			</div>
-		</div>
-</div>
+	
 
 <!-- //login-page -->
-<div class="cate-bottom" style="background:">
-		<div class="container">
-			<div class="col-lg-6 col-sm-12">
-				<div class="cate-bottom-info" style="width:100%;height:50%;">
-					<h3>用户信息</h3>
-					<p>VIP金卡会员<span id="out_username">网二</span></p>
-					<div class="buy let">
-						<a href="orderlist.html">查看我的订单</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-sm-12">
-				<div class="cate-bottom-info" style="width:100%;">
-					<h3>修改登录密码</h3>
-					<p>更改您的密码？
-					<span>安全保障中</span></p>
-					<div class="buy let">
-						<a href="change.html">修改登录密码</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="col-lg-6 col-sm-12">
-				<div class="cate-bottom-info" style="width:100%;height:50%;">
-					<h3>手机号已绑定</h3>
-					<p>您已经绑定手机号码<span id="out_phone">3333</span></p>
-					<div class="buy let">
-						<a href="address.html">管理收货地址</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-sm-12">
-				<div class="cate-bottom-info" style="width:100%;">
-					<h3>购物车</h3>
-					<p>挑选商品
-					<span>快速下单</span></p>
-					<div class="buy let">
-						<a href="checkout.html">前往购物车</a>
-					</div>
-				</div>
-			</div>
-		</div>
-</div>
-
-	<div class="banner-bottom">
-		<div class="container"> 
-			<div class="product-one">
-		  		<script>
-					
-				function makeOne(single){
-					var k = ''+
-					'<div class="col-md-3 col-sm-6 product-left">\
-						<div class="p-one simpleCart_shelfItem jwe"> \
-							<a href="single.html?id='+single.commodity+'"> <img src="'+single.smallimg+'" alt="" class="img-responsive" />\
-							<div class="mask"> <span> 掌柜推荐 !</span> </div>\
-							</a>\
-							<a name="recommends"></a>\
-							<div class="product-left-cart">\
-								<div class="product-left-cart-l">\
-								  <p><a class="item_add" href="#">\
-									<i></i> <span class=" item_price">'+single.name+' &nbsp; ￥'+single.price+'</span></a>\
-								  </p>\
-								</div>\
-								<div class="clearfix"> </div>\
-							</div>\
-						</div>\
-					</div>';
-					return k;
-				}
-				function dealGoodsRet(obj, status){
-					if(typeof(obj) == "string"){
-						obj = JSON.parse(obj);
-					}
-					var x = "";
-					for(i=0;i<obj.length;i++){
-						x += makeOne(obj[i]);
-					}
-					$(".product-one").html(x);
-				}
-				$.ajax({url:"/api/commodity?action=list_top&len=4"}).success(dealGoodsRet);
-				</script>
-				<div class="clearfix"> </div>
-			</div>
+<div class="row" style="font-size:1.1em">
+	<div class="col-lg-6 col-sm-12" style="padding:10%">
+		<div class="card" style="border-radius:10px; background:#FAD65C; box-shadow: 10px 10px 5px #888888; padding:30px 0; margin-bottom: 30px;">
+		  <div class="welcome-info" >
+		    <h3 style="color:#7A4702;padding-right:10%;margin-top:15px;margin-bottom: 50px; font-family:Cambria, 'Hoefler Text', 'Liberation Serif', Times, 'Times New Roman', 'serif';" class="text-right"><strong>GOLD</strong></h3>
+		    <h3 style="color:#7A4702;margin-top:15px;" class="text-center"><strong>专属礼遇</strong></h3>
+			<p class="rep" style="color:#7A4702">纯天然手工，更适合高端宠物</p>
+			<div class="btn" style="margin-top:10px;border: solid 1px #7A4702;"> <a href="single.html?id=3" style="color:#7A4702">专属礼遇</a> </div>
+		  </div>
 		</div>
 	</div>
-	
-<!-- footer -->
-<script>smart_showfooter();</script>
+</div>
+<div class="row">	
+	<div class="col-lg-6 col-sm-12">
+		<div class="card w-100 text-center" style="padding:10%">
+			<div class="card-block">
+				<h2><span>会员信息</span></h2>
+			</div>
+		  <ul class="list-group list-group-flush text-center" style="font-size: 1.6em">
+			<li class="list-group-item text-center"><a href="orderlist.html" class="btn">已买到的商品</a></li>
+			  <li class="list-group-item text-center"><a href="changepass.html" class="btn">修改密码</a></li>
+			  <li class="list-group-item text-center"> <a href="address.html" class="btn">查看收货地址</a></li>
+		  </ul>
+		  <div class="card-block" style="padding-top:2em;font-size:2em;">
+				<a href="#" class="btn btn-primary">联系我们</a> 
+		  </div>
+	  </div>
+	</div>
+</div>
+<div class="card">
+  <div class="container">
+    <div class="product-one">
+      <div class="clearfix"> </div>
+    </div>
+    <script>getPostergoods('.product-one',4);</script> 
+  </div>
+</div>
+
+<!-- footer --> 
+<script>smart_showfooter();</script> 
 <!-- //footer -->
 </body>
 </html>

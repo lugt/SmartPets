@@ -82,20 +82,25 @@
 		<div class="container">
 			<div class="login-grids">
 				<div class="log col-md-6" style="font-size:17px">
-					<h3>注册</h3>
-					 <form onSubmit="return false;">
-						手机号： <input type="text" id="in_phone" placeholder="在这里输入"><br>
-							收货人姓名： <input type="text" id="in_name"  placeholder="在这里输入">							<br>密码:
-							<input type="password" id="in_password" placeholder="在这里输入">
-						<input type="submit" value="现在注册" onclick="zhuce()">
-						<p class="click">我们十分重视您的隐私，因此我们会尽可能少的收集您的信息。<br>并且承诺不会将您的信息发送至任何第三方《使用条款》</p> 
-					</form>
+				  <h3>更新您的密码</h3>
+				  <form onSubmit="return false;">
+						原密码：
+						<input type="password" id="orginal_password" placeholder="在这里输入">
+						<br>
+						新密码：
+					<input type="password" id="new_password"  placeholder="在这里输入">
+						<br>
+						再次确认:
+						<input type="password" id="re_password" placeholder="在这里输入">
+						<input type="submit" value="更新密码" onclick="zhuce()">
+					<p class="click">我们十分重视您的隐私，因此我们会尽可能少的收集您的信息。<br>
+						  并且承诺不会将您的信息发送至任何第三方《使用条款》</p>
+						<p class="click">如果您无法访问您的会员账户，我们很乐意提供帮助</p>
+				  </form>
 				</div>
 				<div class="col-md-6 login-right">
-				  <h3>金卡登录</h3>
-				  <div class="strip"></div>
-				  <p>已经是我们的会员？ 登陆立刻开启尊享礼遇！</p>
-				  <a href="login.html" class="button">立即登录</a>
+				  <h3>返回我的账户 &gt;</h3>
+				  <p><a href="login.html" class="button"> 前往 </a></p>				  
 			  </div>
 			</div>
 		</div>
