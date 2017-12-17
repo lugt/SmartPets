@@ -2769,8 +2769,8 @@ label.radio {
 	  font-size: 14px;
 	}
 	.logo a {
-	  background: url(../images/1.png) no-repeat 0px 0px;
-	  background-size: 18%;
+	  background: url(../images/1.png) no-repeat 0px 4px;
+	  background-size: 30%;
 	  font-size: 1.5em;
 	}
 	.contact-left h3, .login-right h3, .welcome-info h3, .related-products h3, .log h3, .reg h3, .cart-items h1, .banner-inf h1, .cate-bottom-info h3, .pos-absolt h3 {
