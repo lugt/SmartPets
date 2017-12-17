@@ -195,10 +195,6 @@
 			addThis();
 			get_user_addrs();
 		});
-		function rmvProduct(i){
-			var objs = simpleCart.find();
-			objs[i].remove();
-		}
 		function addThis(){
 			var goods = simpleCart.find();
 			var len = goods.length;
@@ -212,7 +208,7 @@
 					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
 				
 				/*''+*/
-					innerT += '<div class="cart-header">'+
+					innerT += '<div class="cart-header cart-t'+i+'">'+
 				'<div class="cart-sec simpleCart_shelfItem"><div class="close" onclick="rmvProduct('+i+')"> X </div>' +
 '						<div class="cart-item cyc">'+
 '							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
@@ -250,9 +246,12 @@
 		function rmvProduct(i){
 					// 删除Cart数据
 					// 删除div
-					$('.cart-header').fadeOut('slow', function(c){
-						$('.cart-header').remove();
-					});
+			$('.cart-t'+i).fadeOut('slow', function(c){
+						$('.cart-t'+i).remove();
+			});
+			
+			var objs = simpleCart.find();
+			objs[i].remove();
 		}
 		</script>
 		<div class="clearfix"> </div>
