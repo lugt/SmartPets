@@ -37,11 +37,10 @@
 	}	
 	
 	function zhuce(){
-		var a,n,t;
-		n = $("#in_name").val();
-		t = $("#in_password").val();		
-		var p = $("#in_phone").val();
-		a = "/api/users?action=reg&phone="+ p + "&name=" + n + "&pass=" + t;
+		var a = encodeURIComponent($("#orginal_password").val());
+		var b = encodeURIComponent($("#new_password").val());		
+		var c = encodeURIComponent($("#re_password").val());
+		a = "/api/users?action=chgpa&original="+ a + "&new=" + b + "&re=" + c;
 		$.ajax(
 			{ url:a }
 		).fail(
