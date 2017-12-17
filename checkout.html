@@ -195,6 +195,10 @@
 			addThis();
 			get_user_addrs();
 		});
+		function rmvProduct(i){
+			var objs = simpleCart.find();
+			objs[i].remove();
+		}
 		function addThis(){
 			var goods = simpleCart.find();
 			var len = goods.length;
@@ -207,7 +211,7 @@
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
 					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
 				
-				/*'<div class="close'+i+'" onclick="rmvProduct('+i+')"> </div>'+*/
+				/*''+*/
 					innerT += '<div class="cart-header">'+
 				'<div class="cart-sec simpleCart_shelfItem">' +
 '						<div class="cart-item cyc">'+
@@ -226,7 +230,7 @@
 '								<a href="single.html?id='+goods[i].fields().id+'">查看商品</a>'+
 '							</div>'+
 '					   </div>'+
-'					   <div class="clearfix"></div>											'+
+'					   <div class="close" onclick="rmvProduct('+i+')"> </div><div class="clearfix"></div>											'+
 '				  </div>'+
 '			 </div>';
 			}
