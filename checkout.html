@@ -213,7 +213,7 @@
 				
 				/*''+*/
 					innerT += '<div class="cart-header">'+
-				'<div class="cart-sec simpleCart_shelfItem">' +
+				'<div class="cart-sec simpleCart_shelfItem"><div class="close" onclick="rmvProduct('+i+')"> X </div>' +
 '						<div class="cart-item cyc">'+
 '							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
 '						</div>'+
@@ -230,7 +230,7 @@
 '								<a href="single.html?id='+goods[i].fields().id+'">查看商品</a>'+
 '							</div>'+
 '					   </div>'+
-'					   <div class="close" onclick="rmvProduct('+i+')"> </div><div class="clearfix"></div>											'+
+'					   <div class="clearfix"></div>											'+
 '				  </div>'+
 '			 </div>';
 			}
