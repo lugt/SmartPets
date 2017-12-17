@@ -67,10 +67,11 @@
 				function makeOne(single){
 					var k = ''+
 					'<div class="col-md-3 col-sm-6 product-left">\
+						<a href="single.html?id='+single.commodity+'">\
 						<div class="p-one simpleCart_shelfItem jwe"> \
-							<a href="single.html?id='+single.commodity+'"> <img src="'+single.smallimg+'" alt="" class="img-responsive" />\
-							<div class="mask"> <span> 掌柜推荐 !</span> </div>\
-							</a>\
+							<img src="'+single.smallimg+'" alt="" class="img-responsive" />\
+							<!--<div class="mask"> <span> 掌柜推荐 !</span> </div>-->\
+							\
 							<a name="recommends"></a>\
 							<div class="product-left-cart">\
 								<div class="product-left-cart-l">\
@@ -81,6 +82,7 @@
 								<div class="clearfix"> </div>\
 							</div>\
 						</div>\
+						</a>\
 					</div>';
 					return k;
 				}
