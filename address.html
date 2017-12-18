@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>修改收货信息 - 萌多多私宠会馆 - 五公里免费上门 </title>
+<title>修改收货信息 - 萌多多私宠会馆 - 五公里免费上门</title>
 <!-- for-mobile-apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!--<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- js -->
-<script src="js/jquery-1.11.1.min.js"></script>
 <!-- //js -->
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="js/move-top.js"></script>
@@ -31,33 +36,37 @@
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
-
 <script>
 	
 	var token = localStorage.getItem("smart_token");
 	var userAddrs = [];
+	// 下面这个变量实际上是改地址在用户地址列表中的顺序
+	var nowAddrId = 0;
 	
 	if(token == "ssp" || token == null || token.length < 10){
 		location.href="login.html";
 	}
 	
 	$(document).ready(function(){
-		get_user_orders();
+		get_user_addrlist();
 	});
 	
 	
 	function save_user_addrs(addrid,num){
-		var caddr1 = (num == 0)?addrid:0;
-		var caddr2 = (num == 1)?addrid:0;
-		var caddr3 = (num == 2)?addrid:0;
-		var caddr4 = (num == 3)?addrid:0;
-		var a = "/api/delivery?action=user_set_addrs&addr1="+caddr1+"&addr2="+caddr2+"&addr3="+caddr3+"&addr4="+caddr4+"&token="+token;
+		//判断addrid 是否太长了
+		var a = "/api/delivery?action=user_set_addrs&num=0&addrid="+addrid+"&token="+token;
+		var b = "/api/delivery?action=user_set_addrs&num="+(num)+"&addrid="+addrid+"&token="+token;
+		send_save_addrlist(a,false);
+		send_save_addrlist(b,true);
+	}
+	
+	function send_save_addrlist(a,show){
 		$.ajax(
-			{ url:a }
+			{ url : a, isShow:show }
 		).fail(
 			function(obj,n){
 				// 失败时执行
-				alert("失败了" + obj + n);
+				alert("当前人数太多啦，请稍后再试哦" + obj + n);
 			}
 		).done(
 			function(obj,n){
@@ -66,17 +75,22 @@
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
 					console.log(c);
-					alert("保存成功！");
+					if(this.isShow) alert("保存成功！");
 					if(GetQueryString("goback") != null){
-						location.href=GetQueryString("goback");
+						if(this.isShow) location.href=GetQueryString("goback");
+					}else{
+						location.reload();
 					}
 				}else{
-					alert(c.msg);
+					if(this.isShow) alert(c.msg);
 				}
 		});
 	}
 	
 	function save_addr(){
+		if(nowAddrId == 0){
+			alert("您的地址过多，这条地址将保存为临时地址。\n您可以稍后删除以前的地址。");
+		}
 		// 保存当前的地址，并且要把地址保存到用户的指定地址中去
 		var cty = $("#city").val();
 		var cphone = $("#in_phone").val();
@@ -84,7 +98,7 @@
 		var crsv = encodeURI($("#in_rsver").val());
 		var a = "/api/delivery?action=address_set&dst="+0+"&prv="+0+"&city="+cty+"&addr="+caddr+"&rsver="+crsv+"&phone="+cphone+"&token="+token;
 		$.ajax(
-			{ url:a ,k:nowAddrId}
+			{ url:a , k : nowAddrId }
 		).fail(
 			function(obj,n){
 				// 失败时执行
@@ -108,8 +122,6 @@
 		);
 	}
 	
-	// 下面这个变量实际上是改地址在用户地址列表中的顺序
-	var nowAddrId = 0;
 	function showByAddr(ad){
 		if(ad.city == 1){
 			$("#pls_futian").attr("selected","true");
@@ -122,46 +134,117 @@
 	}
 	
 	function moveTo(num){
-		nowAddrId = num;
-		show_order(userAddrs[num]);
-	}
-	
-	function show_order(v){
+		var i ;
 		
-		$("#saverbtn").val("保存地址-" + (nowAddrId+1));
-		
-		if(v == 0){ /* 并没有任何的地址 */
+		$("#addr_title").text("修改地址");
+		for(i=1;i<userAddrs.length;i++){
+			if(num == userAddrs[i]){
+				nowAddrId = i;
+				get_single_addr(num, true);
+				return;
+			}
+		}	
+		if(userAddrs[0] == num){
+			nowAddrId = 0;
+			for(i=0; i < userAddrs.length; i ++){
+				if(userAddrs[i] == 0){
+					nowAddrId = i;
+					break;
+				}
+			}
+			get_single_addr(num, true);
 			return;
 		}
-		
+	}
+	
+	function get_single_addr(v,isEdit,qid){
+		if(v == 0){ /* 并没有任何的地址 */
+			return;
+		}		
 		var a = "/api/delivery?action=address_get&addrid="+v+"&token="+token;
 		$.ajax(
-			{ url:a }
+			{ url:a ,edi:isEdit, que:qid}
 		).fail(
 			function(obj,n){
 				// 失败时执行
-				alert("失败了" + obj + n);
+				if(this.isEdit) alert("失败了" + obj + n);
 			}
 		).done(
 			function(obj,n){
 				// 成功时执行
 				console.log(obj);
-				var c = JSON.parse(obj);
+				if(typeof(obj) == "string"){
+					var c = JSON.parse(obj); 
+				}else{
+					var c = obj;
+				} 
+				
 				if(c.code == 1000){
 					console.log(c);
 					var addr = c.addr;
-					showByAddr(addr);
+					if(this.edi == true) {showByAddr(addr);}
+					else { addQueueNode(this.que, addr); }
 				}else{
 					if(c.code == -1015){
 						location.href="login.html?goto=address.html";
 					}
-					alert(c.msg);
+					if(this.isEdit) alert(c.msg);
 				}
 			}
 		);
 	}
 	
-	function get_user_orders(){
+	var validAddrs = [];
+	
+	function show_default_addrlist(){
+		nowAddrId = 0;
+		if(userAddrs.length < 10){
+			console.log("异常");
+		}else{
+			if(userAddrs[0] == 0){
+				// 显示新建效果
+				nowAddrId = 1;
+				$("#addr_title").text("确认您的地址");
+			}else{
+				var i = 0;
+				for(i=1;i<userAddrs.length;i++){
+					if(userAddrs[i] == userAddrs[0]){
+						nowAddrId = i;
+					}
+				}
+				if(nowAddrId == 0){
+					for(i=1;i<userAddrs.length;i++){
+						if(userAddrs[i] == 0){
+							nowAddrId = i;
+							break;
+						}
+					}
+					get_single_addr(userAddrs[0], true);
+				}else{
+					get_single_addr(userAddrs[0], true);
+				}
+				$("#addr_title").text("修改默认地址");
+			}
+		
+			validAddrs = [];
+			userAddrs.forEach(function(item){
+				if(item > 0 && !validAddrs.includes(item)){
+					validAddrs.push(item);	
+				}
+			});
+			if(validAddrs.length == 0){
+				
+			}else{
+				var queueId = createQueue();
+				setQueueEvent(queueId, "exceed", {len: validAddrs.length, firable: true, callback: onAddrsLoaded});
+				for(i=0;i<validAddrs.length;i++){
+					get_single_addr(validAddrs[i],false,queueId);
+				}
+			}
+		}
+	}
+		
+	function get_user_addrlist(){
 		var a = "/api/delivery?action=user_addrs&token="+token;
 		$.ajax(
 			{ url:a }
@@ -177,21 +260,18 @@
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
 					console.log(c);
-					userAddrs.push(c.addr1);
-					userAddrs.push(c.addr2);
-					userAddrs.push(c.addr3);
-					userAddrs.push(c.addr4);
-					nowAddrId = 0;
-					show_order(c.addr1);
+					userAddrs.push(c.default);
+					userAddrs.push(c.addr1);					userAddrs.push(c.addr2);
+					userAddrs.push(c.addr3);					userAddrs.push(c.addr4);
+					userAddrs.push(c.addr5);					userAddrs.push(c.addr6);
+					userAddrs.push(c.addr7);					userAddrs.push(c.addr8);			
+					userAddrs.push(c.addr9);
+					show_default_addrlist();
 				}else{
 					if(c.code == -7003){
 						// 没有任何id
-						userAddrs.push(0);
-						userAddrs.push(0);
-						userAddrs.push(0);
-						userAddrs.push(0);
-						nowAddrId = 0;
-						show_order(0);
+						userAddrs.push = [0,0,0,0,0,0,0,0,0,0];
+						show_default_addrlist();
 					}else{
 						if(c.code == -1015){
 							location.href="login.html?goto=address.html";
@@ -205,53 +285,119 @@
 	
 </script>
 </head>
-	
+
 <body>
-<!-- header -->
-	<script>show_top_header();</script>
+<!-- header --> 
+<script>show_top_header();</script> 
 <!-- check-out -->
-<div class="login">
-	<div class="container">
-		<div class="login-grids">
-			<div class="col-md-6 log">
-					 <h3 id="addr_title">收货地址</h3>
-					 <div class="strip"></div>
-					 <form onsubmit="return false;">
-						 <br>	
-						 <input type="text" id="in_rsver" placeholder="  收货人  " />
-						 <br>
-						 <input type="text" id="in_phone" placeholder="  手机号  " />
-						 <br><span style="margin-left: 10px">地区：</span>
-						<select name="city" id="city" class="arrival">
-							<option value="1" id="pls_futian">深圳福田</option>
-							<option value="2" id="pls_autre">其他地区</option>
-						</select>
-						 <br>
-						 <br>
-						 <input type="text" id="in_addr" placeholder="  地址  " />	
-						 <br>				
-						 <input type="submit" value="保存地址-1" id="saverbtn" onclick="save_addr()" />
-					 </form>
-			</div>
-			<div class="col-md-6 login-right">
-			  <h3>用户的收货地址列表</h3>
-			  <div class="strip"></div>
-			  <p>默认地址 ( 1 )</p>
-			  <a class="button" onclick="moveTo(0)">编辑此地址</a>
-			  <p>地址 ( 2 )</p>
-			  <a class="button" onclick="moveTo(1)">编辑此地址</a>
-			  <p>地址 ( 3 )</p>
-			  <a class="button" onclick="moveTo(2)">编辑此地址</a>
-			  <p>地址 ( 4 )</p>
-			  <a class="button" onclick="moveTo(3)">编辑此地址</a>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
+<div class="card">
+  <div class="card-block"><a href="javascript:void" onclick="trygoBack()" id="returnLabel"> 《 返回上一步 </a> </div>
 </div>
-<!-- //check-out -->
-<!-- footer -->
-<script>smart_showfooter();</script>
+<style>
+form input{
+	padding:10px;
+	margin-bottom: 15px;
+}
+form span{
+	margin-bottom: 12px;		
+}
+@media(max-width: 599px) {
+    .logins {
+        padding:5%;
+    }
+}
+@media(min-width: 600px) {
+    .logins {
+        padding-left:10%; 
+		padding:15%;
+    }
+}
+</style>
+<div class="logins" style="padding:5%;">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="card">
+        <div class="card-block">
+          <h3 id="addr_title">添加收货地址</h3>
+          <div class="strip"></div>
+          <form onsubmit="return false;">
+            <br>
+            <input class="w-100" type="text" id="in_rsver" placeholder="  收货人  " />
+            <br>
+            <input class="w-100" type="text" id="in_phone" placeholder="  手机号  " />
+            <br>
+            <div class="w-100"> <span style="margin-left: 10px">地区：</span>
+              <select name="city" id="city" class="arrival">
+                <option value="1" id="pls_futian">深圳福田</option>
+                <option value="2" id="pls_autre">其他地区</option>
+              </select>
+            </div>
+            <br>
+            <input class="w-100" type="text" id="in_addr" placeholder="  地址  " />
+            <br>
+            <input class="btn btn-primary" type="submit" value="保存并设置默认" id="saverbtn" onclick="save_addr()" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="card w-100 text-center" style="padding:30px">
+        <div class="card-block">
+          <h3>我的地址</h3>
+        </div>
+        <ul class="list-group list-group-flush text-center" style="font-size: 1.6em" id="addrList">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	function goNew(){
+		for(i=1; i < userAddrs.length;i++){
+			if(userAddrs[i] == 0){
+				nowAddrId = i;
+				break;
+			}
+		}
+		$("#pls_autre").removeAttr("selected");
+		$("#pls_futian").attr("selected","selected");
+		$("#in_rsver").val("");
+		$("#in_phone").val("");
+		$("#in_addr").val("");
+		$("#addr_title").text("添加地址");
+	}
+	var allAddrs = [];
+	function onAddrsLoaded(item){
+		allAddrs = item.nodes;
+		var lst = "";
+		for(i = 0; i < allAddrs.length ; i ++ ){
+			var ad = allAddrs[i];
+			lst += showAddrInList(i, ad.addrid, decodeURI(ad.rsvr),ad.mobile);
+		}
+		if(allAddrs.length < 9){
+			lst += '<li class="list-group-item text-center"><a href="javascript:void" class="btn" onclick="goNew()">新地址</a></li>';
+		}
+		$("#addrList").html(lst);
+	}	
+	function showAddrInList(i, addrid, rsvr, mob){
+	  return '<li class="list-group-item text-center"><a href="javascript:void" class="btn" onclick="moveTo('+addrid+')"> '+mob+' : '+rsvr+' </a></li>';
+	}
+	function trygoBack(){
+		if(GetQueryString("goback") != null){
+			history.go(-1);
+		}else {
+			location.href = 'usercenter.html';
+		}
+	}
+	$.ready(function(){
+		if(GetQueryString("goback") == null){
+			$("#returnLabel").text("《 返回 我的账户");
+		}
+	});
+</script> 
+<!-- //check-out --> 
+<!-- footer --> 
+<script>smart_showfooter();</script> 
 <!-- //footer -->
 </body>
 </html>
