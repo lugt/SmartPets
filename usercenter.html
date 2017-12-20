@@ -50,6 +50,7 @@
 			function(obj,n){
 				// 失败时执行
 				alert("失败了" + obj + n);
+				location.href="login.html";
 			}
 		).done(
 			function(obj,n){
@@ -63,10 +64,11 @@
 						c.phone = ""+c.phone;
 					}
 					$("#out_phone").html(c.phone.substring(0,3) + "****"+c.phone.substring(7,11));
+					$("#main-body").show();
 				}else{
 					if(c.code == -2010){
-						location.href="login.html";
 						localStorage.setItem("token","ssp");	
+						location.href="login.html";
 						return;
 					}
 					alert(c.msg);
@@ -87,7 +89,7 @@
 	
 
 <!-- //login-page -->
-<div class="row" style="font-size:1.1em">
+<div class="row" style="font-size:1.1em" id="main-body">
 	<div class="col-lg-7 col-sm-12" style="padding:10%">
 		<div class="card" style="border-radius:10px; background:#FAD65C; box-shadow: 10px 10px 5px #888888; padding:30px 0; margin-bottom: 30px;">
 		  <div class="welcome-info" >
