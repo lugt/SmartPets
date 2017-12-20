@@ -204,9 +204,12 @@
 					showByAddr(addr);
 				}else{
 					if(c.code == -1015){
-						location.href="login.html?goto=address.html";
+						location.href="login.html?goto="+encodeURIComponent(location.href);
+					}else if(c.code == -7001){
+						$("#addr_comb").html("您的送货地址已被加密，如需更改请联系客服");
+					}else{
+						alert(c.msg);
 					}
-					alert(c.msg);
 				}
 			}
 		);
