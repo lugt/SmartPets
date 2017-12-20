@@ -39,7 +39,11 @@
 	}
 	
 	$(document).ready(function(){
-		get_order();
+		var len  = 4;
+		if(GetQueryString("len") != null){
+			len = GetQueryString("len");
+		}
+		get_order(len);
 	});
 	
 	function addThis(c){
@@ -89,8 +93,18 @@
 		$("#order-mm-items").html(innerT);		
 	}
 	
-	function get_order(){
-		var a = "/api/orders?action=find_uid&token="+token;
+	function increase_len(){
+		var ll = GetQueryString("len");
+		if(ll != null){
+			ll = parseInt(ll) + 20;
+		}else{
+			ll = 20;
+		}
+		location.href= "orderlist.html?len="+ll;
+	}
+	
+	function get_order(lens){
+		var a = "/api/orders?action=find_uid&len="+lens+"&token="+token;
 		$.ajax(
 			{ url:a }
 		).fail(
@@ -126,7 +140,8 @@
 	<div class="check">	 
 	
 		<div class="col-md-9 cart-items" id="order-mm-items">
-		  <h1>订单详情</h1>	
+		  <div class="col-8"><h1>我买到的商品</h1></div> 
+			<div class="col-4"><a href="javascript:void" class="btn btn-sm" onClick="increase_len()">更多商品</a>	</div>
 		</div>
 		<div class="col-md-3 cart-total">
   			<a class="continue" href="address.html?goto=orderlist.html">修改默认收货地址</a>
