@@ -28,7 +28,7 @@
 		var a,s,t;
 		
 		s = $("#in_username").val();
-		t = $("#in_passwd").val();		
+		t = encodeURIComponent($("#in_passwd").val());	
 		
 		a = "/api/users?action=quick&phone="+ s + "&pass=" + t;
 		$.ajax(

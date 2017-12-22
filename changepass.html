@@ -37,10 +37,14 @@
 	}	
 	
 	function zhuce(){
-		var a = encodeURIComponent($("#orginal_password").val());
+		//var a = encodeURIComponent($("#orginal_password").val());
 		var b = encodeURIComponent($("#new_password").val());		
 		var c = encodeURIComponent($("#re_password").val());
-		a = "/api/users?action=chgpa&original="+ a + "&new=" + b + "&re=" + c;
+		if(b != c){
+			alert("两次密码不一致哦，请修改");
+			return;
+		}
+		a = "/api/users?action=chgpass&val="+ a + "&token=" + localStorage.getItem("smart_token");
 		$.ajax(
 			{ url:a }
 		).fail(
@@ -56,8 +60,8 @@
 				console.log(obj);
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
-					localStorage.setItem("smart_token",c.token);
-					alert("注册成功咯！");
+					//localStorage.setItem("smart_token",c.token);
+					alert("修改成功！");
 					top.location.href=page;
 				}else{
 					alert(c.msg);
@@ -83,8 +87,8 @@
 				<div class="log col-md-6" style="font-size:17px">
 				  <h3>更新您的密码</h3>
 				  <form onSubmit="return false;">
-						原密码：
-						<input type="password" id="orginal_password" placeholder="在这里输入">
+						<!--原密码：
+						<input type="password" id="orginal_password" placeholder="在这里输入">-->
 						<br>
 						新密码：
 					<input type="password" id="new_password"  placeholder="在这里输入">

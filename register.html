@@ -39,7 +39,7 @@
 	function zhuce(){
 		var a,n,t;
 		n = $("#in_name").val();
-		t = $("#in_password").val();		
+		t = encodeURIComponent($("#in_password").val());		
 		var p = $("#in_phone").val();
 		a = "/api/users?action=reg&phone="+ p + "&name=" + n + "&pass=" + t;
 		$.ajax(
