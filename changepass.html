@@ -44,7 +44,7 @@
 			alert("两次密码不一致哦，请修改");
 			return;
 		}
-		a = "/api/users?action=chgpass&val="+ a + "&token=" + localStorage.getItem("smart_token");
+		var a = "/api/users?action=chgpass&val="+ b + "&token=" + localStorage.getItem("smart_token");
 		$.ajax(
 			{ url:a }
 		).fail(
