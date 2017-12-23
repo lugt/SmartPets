@@ -168,8 +168,19 @@
 			var len = goods.length;
 			var data = [];
 			for(i=0;i<len;i++){
-				data.push({q:goods[i].fields().quantity,model:1,id:goods[i].fields().id});
+				console.log("商 品 ： "+i);
+				console.log(goods[i]);
+				var specArr = [];
+				for(j=0;j<goods[i].spec;j++){
+					var specObj = {};
+					specObj.i = goods[i].spec[j].id;
+					specObj.v = goods[i].spec[j].val;
+					specArr.push(specObj);
+				}
+				data.push({q:goods[i].fields().quantity,model:1,id:goods[i].fields().id, spec:specArr});
 			}
+			console.log(data);
+			return;
 			if(sumOfMoney <= 0.01){
 				alert("请先选购商品哦");
 				return false;

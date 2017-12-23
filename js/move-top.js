@@ -34,8 +34,13 @@ function dealGoodsRet(obj, status, item){
 	if(typeof(obj) == "string"){
 		obj = JSON.parse(obj);
 	}
-	var x = "";
+	var x = "<div class='row' id='auto-goods-row-0'>";
+	var v = 0;
 	for(i=0;i<obj.length;i++){
+		if(i - v >= 4){
+			x+="</div><div class='row' id='auto-goods-row-0'>";
+			v = i;
+		}
 		x += makeOne(obj[i]);
 	}
 	$(item).html(x);

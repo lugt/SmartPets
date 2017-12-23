@@ -31,8 +31,56 @@
 <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
 <script src="js/menu_jquery.js"></script>
 <script src="js/simpleCart.min.js"> </script>
-
+</head>
+	
+<body>
+<!-- header -->
+<script>show_top_header();</script>
+<!-- check-out -->
+<div class="container">
+	<div class="check">	 
+		<div class="col-md-9 cart-items" id="order-mm-items">		  
+		</div>
+		<div class="col-md-3 cart-total">
+ 			<ul class="total_price">
+			   <li class="last_price"> <h4>待支付金额</h4></li>	
+			   <li class="last_price" id="counted_price"><span>XX.XX</span></li>
+			   <div class="clearfix"> </div>
+			</ul> 
+			<div class="clearfix"></div>
+			<a class="order" href="#" id="topay_btn" style="background:#34B414">前往支付</a>
+			<a class="continue">订单信息</a>
+   			<div class="price-details">
+				<h3>价格详情</h3>
+				<span>商品价格</span>
+				<span class="total1" id="productprice">XX.XX￥</span>
+				<span>优惠</span>
+				<span class="total1" id="promotions">- XX.XX￥</span>
+				<span>物流费用</span>
+				<span class="total1" id="deliveryfee"></span>
+				<div class="clearfix"></div>				 
+			</div>
+			
+  			<a class="continue">收货地址</a>
+			<div class="price-details" id="addr_comb">
+			
+			</div>        
+			<div class="total-item">
+				<h3>创建时间</h3>
+				<h4 id="create_time"></h4>
+				<h3>发货时间</h3>
+				<h4 id="send_time"></h4>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+</div>
+<!-- //check-out -->
+<!-- footer -->
+<script>smart_showfooter();</script>
+	
 <script>
+	var orderGoods = [];
 	var token = localStorage.getItem("smart_token");
 	if(token == "ssp" || token == null || token.length < 10){
 		location.href="login.html";
@@ -62,6 +110,14 @@
 				console.log(obj);
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
+					var specstr = c.spec;
+					if(typeof(specstr) == "string" && specstr.length > 1){
+						c.spec = JSON.parse(specstr);
+						//showSpecs(c.spec);
+					}
+					var cval = formatSpecs(orderGoods[this.k].spec, c.spec);
+					$("#cart-item-spec-info-"+this.k).html("<li><p>"+cval"</p></li>");
+					$("#cart-item-pic-"+this.k).attr("src",c.img);
 					$("#cart-item-name-"+this.k).html(c.name);
 				}else{
 					alert("部分商品信息暂时无法加载");
@@ -70,15 +126,38 @@
 		);
 	}
 	
+	function formatSpecs(chosenspecs, specinfo){
+		var i,j,k;
+		var specString = "";
+		for(i=0;i<specinfo.length;i++){
+			specString += " " + specinfo[i].n + " ： ";
+			for(j=0; j < chosenspecs.length){
+				if(chosenspecs[j].i == specinfo[i].id){
+					var vals = specinfo[j].vals;
+					for(k=0;k<vals.length;k++){
+						if(vals[k].val == chosenspecs[j].v){
+							specString += vals[k].n;
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
+		return specString;
+	}
+	
 	function addThis(c){
 		var goods = JSON.parse(c.order.commodity);
+		orderGoods = goods;
 		var len = goods.length, i = 0;
 		var innerT = "";
 		for(i=0;i<len;i++){
-				var price = "订单内商品-"+goods[i].id,cname = "商品信息正在加载";
+				var price = "订单内商品-"+goods[i].id, cname = "商品信息正在加载";
 				shangpin(goods[i].id,i);
 				var cquant = goods[i].q,cid = goods[i].id;
-				var cimg = "images/123.jpg";
+				//var specs = goods[i].spec;
+				var cimg = "images/1569.gif";
 				innerT += '<div class="cart-header">'+
 			'<div class="cart-sec simpleCart_shelfItem">' +
 '						<div class="cart-item cyc">'+
@@ -88,6 +167,9 @@
 '					   <div class="cart-item-info">'+
 '							<ul class="qty">'+
 '								<li><p>数量 : '+cquant+'</p></li>'+
+'							</ul>'+
+'							<ul class="qty" id="cart-item-spec-info-'+i+'">'+
+'								<li><p></p></li>'+
 '							</ul>'+
 '							<div class="delivery">'+
 '								 <span>正在备货中</span>'+
@@ -144,6 +226,7 @@
 			}
 		);
 	}
+	
 	
 	function get_deliver(v){
 		if(v == 0){ /* 没有给到订单号 */
@@ -216,53 +299,6 @@
 	}
 	
 </script>
-</head>
-	
-<body>
-<!-- header -->
-<script>show_top_header();</script>
-<!-- check-out -->
-<div class="container">
-	<div class="check">	 
-		<div class="col-md-9 cart-items" id="order-mm-items">		  
-		</div>
-		<div class="col-md-3 cart-total">
- 			<ul class="total_price">
-			   <li class="last_price"> <h4>待支付金额</h4></li>	
-			   <li class="last_price" id="counted_price"><span>XX.XX</span></li>
-			   <div class="clearfix"> </div>
-			</ul> 
-			<div class="clearfix"></div>
-			<a class="order" href="#" id="topay_btn" style="background:#34B414">前往支付</a>
-			<a class="continue">订单信息</a>
-   			<div class="price-details">
-				<h3>价格详情</h3>
-				<span>商品价格</span>
-				<span class="total1" id="productprice">62.00 ￥</span>
-				<span>优惠</span>
-				<span class="total1" id="promotions">- 0.2￥</span>
-				<span>物流费用</span>
-				<span class="total1" id="deliveryfee"></span>
-				<div class="clearfix"></div>				 
-			</div>
-			
-  			<a class="continue">收货地址</a>
-			<div class="price-details" id="addr_comb">
-			
-			</div>        
-			<div class="total-item">
-				<h3>创建时间</h3>
-				<h4 id="create_time"></h4>
-				<h3>发货时间</h3>
-				<h4 id="send_time"></h4>
-			</div>
-		</div>
-		<div class="clearfix"> </div>
-	</div>
-</div>
-<!-- //check-out -->
-<!-- footer -->
-<script>smart_showfooter();</script>
 <!-- //footer -->
 </body>
 </html>
