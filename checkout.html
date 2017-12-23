@@ -62,7 +62,7 @@
 					showByAddr(addr);
 				}else{
 					if(c.code == -1015){
-						location.href="login.html?goto=address.html";
+						location.href="login.html?goto=checkout.html";
 					}
 					alert(c.msg);
 				}
@@ -97,7 +97,7 @@
 						show_order(0);
 					}else{
 						if(c.code == -1015){
-							location.href="login.html?goto=address.html";
+							location.href="login.html?goto=checkout.html";
 						}
 						alert(c.msg);
 					}
@@ -217,7 +217,9 @@
 					sumOfMoney += cquant * price;
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
 					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
-				
+					var cspec = goods[i].fields().spec;
+					console.debug(goods[i].fields());
+					var cval = formatSpecs(cspec);
 				/*''+*/
 					innerT += '<div class="cart-header cart-t'+i+'">'+
 				'<div class="cart-sec simpleCart_shelfItem"><div class="close" onclick="rmvProduct('+i+')"> X </div>' +
@@ -228,6 +230,9 @@
 '					   <div class="cart-item-info">'+
 '							<ul class="qty">'+
 '								<li><p>数量 : '+cquant+'</p></li>'+
+'							</ul>'+
+							'<ul class="qty">'+
+'								<li><p>'+cval+'</p></li>'+
 '							</ul>'+
 '							<div class="delivery">'+
 '								 <span>下单后立即发货</span>'+
@@ -253,6 +258,15 @@
 			if(sumOfMoney <= 0.01){
 				$("#press_order").hide();
 			}
+		}
+			
+		function formatSpecs(specs){
+			var i,j,k;
+			var specString = "";
+			for(i=0;i<specs.length;i++){
+				specString += " " + specs[i].n + " ： " + specs[i].valn;
+			}
+			return specString;
 		}
 		function rmvProduct(i){
 					// 删除Cart数据
