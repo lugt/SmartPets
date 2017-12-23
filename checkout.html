@@ -49,7 +49,9 @@
 		).fail(
 			function(obj,n){
 				// 失败时执行
-				alert("失败了" + obj + n);
+				console.log("失败了："+obj+n);
+				console.log(obj);
+				console.log(n);
 			}
 		).done(
 			function(obj,n){
@@ -79,7 +81,9 @@
 		).fail(
 			function(obj,n){
 				// 失败时执行
-				alert("失败了" + obj + n);
+				console.log("失败了："+obj+n);
+				console.log(obj);
+				console.log(n);
 			}
 		).done(
 			function(obj,n){
@@ -162,7 +166,7 @@
 			if(defaultadd == 0){
 				location.href = "address.html?goback=checkout.html";
 				return;
-			}		
+			}
 			
 			var goods = simpleCart.find();
 			var len = goods.length;
@@ -171,20 +175,21 @@
 				console.log("商 品 ： "+i);
 				console.log(goods[i]);
 				var specArr = [];
-				for(j=0;j<goods[i].spec;j++){
+				var specar = goods[i].get("spec");
+				for(j=0;j<specar.length;j++){
 					var specObj = {};
-					specObj.i = goods[i].spec[j].id;
-					specObj.v = goods[i].spec[j].val;
+					specObj.i = specar[j].id;
+					specObj.v = specar[j].val;
 					specArr.push(specObj);
 				}
 				data.push({q:goods[i].fields().quantity,model:1,id:goods[i].fields().id, spec:specArr});
 			}
-			console.log(data);
-			return;
-			if(sumOfMoney <= 0.01){
+			if(len <= 0){
 				alert("请先选购商品哦");
 				return false;
 			}
+			
+			console.log(data);
 			var url = '/api/orders?action=create&token='+token+'&payment=2&delivery=2&addr='+defaultadd+'&products=' + encodeURI(JSON.stringify(data));
 			$.ajax({url:url}).done(function(obj,s){
 				// OK				
@@ -202,7 +207,10 @@
 				alert("下单失败，请稍候再试");
 			});
 		}
+		var already = false;
 		simpleCart.ready( function(){
+			if(already) return;
+			already = true;
 			addThis();
 			get_user_addrs();
 		});
@@ -212,7 +220,7 @@
 			var i = 1;
 			var innerT = "";
 			for(i=0;i<len;i++){
-					var price = goods[i].fields().price;
+					var price = (goods[i].get("subtotal") == undefined)?(goods[i].get("price")):(goods[i].get("subtotal"));
 					var cquant = goods[i].fields().quantity;
 					sumOfMoney += cquant * price;
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
@@ -220,6 +228,7 @@
 					var cspec = goods[i].get("spec");
 					console.debug(goods[i].get("spec"));
 					var cval = formatSpecs(cspec);
+					var subTotal = goods[i].get("subtotal");
 				/*''+*/
 					innerT += '<div class="cart-header cart-t'+i+'">'+
 				'<div class="cart-sec simpleCart_shelfItem"><div class="close" onclick="rmvProduct('+i+')"> X </div>' +
@@ -229,7 +238,7 @@
 '                           <h3>'+cname+'</h3>'+
 '					   <div class="cart-item-info">'+
 '							<ul class="qty">'+
-'								<li><p>数量 : '+cquant+' ，小计 : '+goods[i].get("subtotal")+'</p></li>'+
+'								<li><p>数量 : '+cquant+' ，小计 : ￥ '+(cquant * price).toFixed(2) +'</p></li>'+
 '							</ul>'+
 							'<ul class="qty">'+
 '								<li><p>'+cval+'</p></li>'+
@@ -261,6 +270,7 @@
 		}
 			
 		function formatSpecs(specs){
+			if(specs == undefined || specs == null) return "";
 			var i,j,k;
 			var specString = "";
 			for(i=0;i<specs.length;i++){

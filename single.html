@@ -12,6 +12,8 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- js -->
 <script src="js/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
 <!-- //js -->
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="js/move-top.js"></script>
@@ -198,13 +200,18 @@
 				alert("请选择规格");
 				return;
 			}
+			var tempPrice = product_obj.price;
+			if(product_obj.tgtPrice != undefined){
+				tempPrice = product_obj.tgtPrice;
+			}
 			var now = simpleCart.add(
 				{ 
 					name: product_obj.name , 
-					price: product_obj.price, 
+					price: tempPrice,
 					img:product_obj.img, 
 					id : productid, 
 					spec : specs,
+					subtotal: tempPrice,
 					quantity: $("#quantity").val()
 				});
 			if(now !=null)alert("添加成功！");
@@ -233,20 +240,20 @@
 							showSpecs(c.spec);
 						}
 						product_obj = c;
-						jQuery(".item_name").html(c.name);
-						jQuery("#product_half_name").html(c.keywords);
-						jQuery(".qwe").html("￥ " + c.price);
-						jQuery("#secondDescriptor").html(c.weight + "g / Pretium 精选价格");
+						$(".item_name").html(c.name);
+						$("#product_half_name").html(c.keywords);
+						$(".qwe").html("￥ " + c.price);
+						$("#secondDescriptor").html(c.weight + "g / Pretium 精选价格");
 						if(c.description == null || c.description == undefined){
-							jQuery("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
+							$("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
 						}else{
-							jQuery("#product_intro").html(c.description);	
+							$("#product_intro").html(c.description);	
 						}
 						
-						jQuery("#pass_img")[0].src=c.img;
-						jQuery(".item_id").html(productid);
-						jQuery(".item_img").html(c.img);
-						jQuery("#weightIndicator").html(" "+c.weight+"克");
+						$("#pass_img")[0].src=c.img;
+						$(".item_id").html(productid);
+						$(".item_img").html(c.img);
+						$("#weightIndicator").html(" "+c.weight+"克");
 						// Can also be used with $(document).ready()
 						/*$(window).load(function() {
 						  /*$('.flexslider').flexslider({
@@ -266,7 +273,7 @@ function getSpecs(){
 	if(product_specs!=undefined && product_specs != null && product_specs.length > 0){
 		for(i=0;i<product_specs.length;i++){
 			var s = product_specs[i];
-			var val = $("input[name='"+s.id+"'][checked]").val();
+			var val = $('#spec-input-'+s.id).val();
 			// spec[i] = {n : , id: , vals:[{n:, val:, av:, vp:}]}
 			chosen = {};
 			for(j=0; j<s.vals.length; j++){
@@ -291,7 +298,7 @@ function getSpecs(){
 	console.debug(specs);
 	return specs;
 }
-	
+
 function showSpecs(specarr){
 	product_specs = specarr;
 	var i,j,s,sl;
@@ -305,14 +312,17 @@ function showSpecs(specarr){
 		//'\t\t\t<option>'+s.n+'</option>\n' +
 		//'\t\t</select>\n' +
 		'\t</div>\n' +
-		'\t<div class="col-rad-right">\n' +
+		'\t<div class="col-rad-right"> <input class="specs-input" id="spec-input-'+s.id+'" sm-ad="0" sm-vp="1" type="hidden" value="" />\n' +
 		'\t\t<section>\n' +
-		'\t\t\t<div class="row">\n';
+		'<div class="btn-group" data-toggle="buttons">';
+		//'\t\t\t<div class="row">\n';
 		for(j = 0; j < s.vals.length ; j ++){
 			var sl = s.vals[j]; // {n:, val:, av:, vp:}
-			ty += '<div class="colr ert col-4">\n' +
+			ty +=   '<label class="btn btn-primary '+((j == 0)?"":"")+'" onclick="changeSpecradio($(this).find(\'input\'))">'+
+					' <input type="radio" autocomplete="off" name="option-spec-'+s.id+'" sm-ad="'+sl.av+'" sm-vp="'+sl.vp+'" sm-id="'+s.id+'" sm-val="'+sl.val+'" onclick="changeSpecradio(this)" '+((j == 0)?"checked":"")+'>'+ sl.n +	'</label>';
+			/*ty += '<div class="colr ert col-4">\n' +
 			'\t<label class="radio"><input type="radio" name='+s.id+' value="'+sl.val+'"><i></i>'+sl.n+'</label>\n' +
-			'</div>\n' ;
+			'</div>\n' ;*/
 		}
 		ty += '\t\t\t</div>\t\t\n' +
 		'\t\t</section>\n' +
@@ -321,6 +331,25 @@ function showSpecs(specarr){
 		'</div>'
 	}
 	$("#specbox").html(ty);
+}
+
+function changeSpecradio(item){
+	var totalAd = 0, totalVp = 1;
+	var spec = $(item).attr("sm-val");
+	var specId = $(item).attr("sm-id");
+	var smad = $(item).attr("sm-ad");
+	var smvp = $(item).attr("sm-vp");
+	$("#spec-input-"+specId).attr("sm-ad",smad);
+	$("#spec-input-"+specId).attr("sm-vp",smvp);
+	$(".specs-input").each(function(i,item){
+		totalAd += parseFloat($(item).attr("sm-ad"));
+		totalVp *= parseFloat($(item).attr("sm-vp"));	
+	})
+	var targetPrice = (product_obj.price + totalAd) * totalVp
+	jQuery(".qwe").html("￥ " + targetPrice);
+	product_obj.tgtPrice = targetPrice;
+	$('#spec-input-'+specId).val(spec);
+	$(item).button('toggle');
 }
 </script>
 <!-- footer -->

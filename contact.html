@@ -40,31 +40,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- header -->
 <script>show_top_header();</script>
 <!-- contact -->
-	<div class="contact-bottom">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d96908.54934770924!2d-73.74913540000001!3d40.62123259999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sanimal+rescue+service+near+Inwood%2C+New+York%2C+NY%2C+United+States!5e0!3m2!1sen!2sin!4v1436335928062" frameborder="0" style="border:0" allowfullscreen></iframe>
-	</div>
 	<div class="contact">
 		<div class="container">
 			<div class="col-md-4 contact-left">
+				<h3>微商城服务：- 小鹿云 -</h3>
 				<h3>关于我们</h3>
 				<p>欢迎您联系我们
+					<span>微信： 18611823550</span>
 					<span>福田大道888号，深圳市，广东省</span></p>
 				<ul>
 					<li>电话 :+86 0755 4589 2456</li>
-					<li>手机 :+86 0755 4589 2456</li>
-					<li>传真 :+86 0755 4589 2456</li>
-					<li><a href="mailto:support@niimei.com">support@niimei.com</a></li>
+					<li><a href="javascript:void">微商城服务： 小鹿云</a></li>
 				</ul>
+				
+			<div class="contact-bottom">
+				<iframe id="geoPage" width="100%" height="30%" frameborder=0 scrolling="no"
+    			src="http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:22.52401,114.05753;title:萌多多私宠会馆;addr:皇岗村地铁口E口外&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp"></iframe>
+     
+				<!--<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d96908.54934770924!2d-73.74913540000001!3d40.62123259999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sanimal+rescue+service+near+Inwood%2C+New+York%2C+NY%2C+United+States!5e0!3m2!1sen!2sin!4v1436335928062" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 			</div>
+			</div>
+			
 			<div class="col-md-8 contact-left">
 				<h3>我们十分重视您的想法</h3>
-				<form>
-					<input type="text" placeholder="可选（您的称呼）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" >
-					<input type="email" placeholder="可选（您的联系方式）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" >
-					<input type="text" value="可选（您在本站注册的手机号）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone';}">
-					<textarea type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '您的想法';}" required>您的想法：</textarea>
-					<input type="submit" value="提交" >
-				</form>
+				<div method="post" onsubmit="">
+					<input id="in_call" type="text" placeholder="可选（您的称呼）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '可选（您的称呼）';}" >
+					<input id="in_acc" type="text" value="可选（您在本站注册的手机号）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '可选（您在本站注册的手机号）';}">
+					<textarea id="in_opinion" type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '您的想法';}" required>您的想法：</textarea>
+					<button class="btn btn-outline btn-primary btn-block" type="submit" value="提交" onclick="goSubmit()">提交</button>
+				</div>
 			</div>
 			<div class="clearfix"> </div>
 		</div>
@@ -72,6 +76,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //contact -->
 <!-- footer -->
 <script>smart_showfooter();</script>
+<script>
+	function goSubmit(){
+		var cobj = {
+			acc : $("#in_acc").val(),
+			call : $("#in_call").val(),
+			op : $("#in_opinion").val()
+		};
+		$.ajax({url:"/api/commodity?action=feedback", data = JSON.stringify(cobj)}).always(function(i,a){
+			console.log(i);
+			console.log(a);
+			alert("您的反馈已经发送至小二，我们将认真对待您的建议。感谢您对我们的支持！");
+		})
+	}
+</script>
 <!-- //footer -->
 </body>
 </html>

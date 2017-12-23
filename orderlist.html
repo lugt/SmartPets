@@ -46,9 +46,46 @@
 		get_order(len);
 	});
 	
+	function showShangpin(retn, status){
+		var q = this.qId;
+		if(typeof(retn) == "string"){
+			retn = JSON.parse(retn);
+		}
+		addQueueNode(q,retn);
+	}
+	
+	function onGoodsLoaded(item){
+		allGoods = item.nodes;
+		var lst = "";
+		for(i = 0; i < allGoods.length ; i ++ ){
+			if(lst.length > 0){
+				lst += "," + allGoods[i].name;
+			}else{
+				lst += allGoods[i].name;
+			}
+			
+			if(lst.length > 30){
+				break;
+			}
+		}
+		if(lst.length > 17 && lst.lastIndexOf(",") > 0){
+			lst = lst.substring(0,lst.lastIndexOf(",")) + ", 共" + allGoods.length + "件";
+		}else{
+			lst += ", 共" + allGoods.length + "件";
+		}
+		for(i=0;i<queues.length;i++){
+			if(queues[i] == item.id){
+				$('#cart-item-pict-'+i).html(lst);
+				$('#cart-item-pic-'+i).attr("src",allGoods[0].img);	
+				break;
+			}
+		}		
+	}
+	var queues = [];
+	var orders = [];
 	function addThis(c){
 		console.log(c);
-		var orders = c.orders;
+		orders = c.orders;
 		var len = orders.length, i = 0;
 		var innerT = "";
 		for(i=0;i<len;i++){
@@ -57,7 +94,12 @@
 			var price = order.due.toFixed(2) + " ￥";
 			var pricepayable = (order.due - order.paid).toFixed(2) + " ￥";
 			var cquant = goods.length, cid = order.orderid;
-			var cimg = "images/123.jpg";
+			var cimg = "images/1569.gif";
+			queueId = createQueue();
+			setQueueEvent(queueId,"exceed",{len: cquant, firable: true, callback: onGoodsLoaded});
+			goods.forEach(function(item){
+				$.ajax({url: "/api/commodity?action=find_good&commodity="+ item.id, qId:queueId}).done(showShangpin);
+			});
 			var cfahuo = "";
 			if(order.packTime != "0" && order.packTime != order.createTime){
 				k = new Date(order.packTime);
@@ -65,20 +107,20 @@
 			}else{
 				cfahuo = ("正在准备发货");
 			}
-			
+			queues[i] = queueId;
 			innerT += '<div class="cart-header">'+
 		'<div class="cart-sec simpleCart_shelfItem">' +
 '						<div class="cart-item cyc">'+
 '							<img src="'+cimg+'" class="img-responsive" alt="" id="cart-item-pic-'+i+'"/>'+
 '						</div>'+
-'                           <h3 id="cart-item--'+i+'">订单 - '+cid+'</h3>'+
+'                           <h3 id="cart-item-'+i+'">订单'+new Date(order.createTime).Format("yyyy-MM-dd")+'-'+cid+'</h3>'+
 '					   <div class="cart-item-info">'+
 '							<ul class="qty">'+
-'								<li><p>共计'+cquant+' 件商品</p></li>'+
+'								<li><p id="cart-item-pict-'+i+'">共计 '+cquant+' 件商品</p></li>'+
 '							</ul>'+
 '							<div class="delivery">'+
 '								 <span> 总计：'+price+'， 尚需支付：'+pricepayable+'</span>'+
-'								 <span>'+cfahuo+'  -  </span>'+
+'								 <br><span>'+cfahuo+'  -  </span>'+
 '								 <div class="clearfix"></div>'+
 '							</div>	'+
 '							<div class="fgh">'+
@@ -144,12 +186,7 @@
 			<div class="col-4"><a href="javascript:void" class="btn btn-sm" onClick="increase_len()">更多商品</a>	</div>
 		</div>
 		<div class="col-md-3 cart-total">
-  			<a class="continue" href="address.html?goto=orderlist.html">修改默认收货地址</a>
-			<div class="price-details">
-            <p>收货人：<span id="rsvPers"></span></p>
-            <p>手机号：<span id="rsvTel"></span></p>
-            <p>地址：<span id="rsvAddr"></span></p>
-			</div>
+  			<a class="continue" href="contact.html?goback=orderlist.html" style="background-color: #078E33">需要帮助吗？我们随时待命</a>
 			<div class="clearfix"></div>
 		</div>
 		<div class="clearfix"> </div>
