@@ -91,7 +91,7 @@
 			</div>
 			<div class="flower-type">
 				<p>商品类型  ：<a href="#">风干狗粮</a></p>
-				<p>产品规格  ：<a href="#" id="weightIndicator">*****g</a></p>
+				<p>产品规格  ：标准包装 <a href="#" id="weightIndicator" style="display: none">*****g</a></p>
 				<p>适合体质 ：<a href="#">不限</a></p>
 			</div>
 			<p class="desc">此产品承诺不满意全额退款</p>
@@ -153,25 +153,25 @@
 		<h3>相关的产品</h3>
 		<div class="col-md-4 related products-grid">
 			<a href="single.html?id=3">
-			<img src="images/123.jpg" alt=" " class="img-responsive" />
+			<img src="images/jirougan.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline"><span id="npricetag_2"></span>12.8元</span> <span class="item_price val"><span id="pricetag_2"></span>18.8元</span></p>
+				<p><span class="overline"><span id="npricetag_2"></span>18.8元</span> <span class="item_price val"><span id="pricetag_2"></span>12.8元</span></p>
 			</div>
 			</a>
 		</div>
 		<div class="col-md-4 related products-grid">
-			<a href="single.html?id=15">
-			<img src="images/02.jpg" alt=" " class="img-responsive" />
+			<a href="single.html?id=5">
+			<img src="images/zishumoya.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline"><span id="npricetag_3"></span>16.8元</span> <span class="item_price val"><span id="pricetag_3"></span>28.8元</span></p>
+				<p><span class="overline"><span id="npricetag_3"></span>18.8元</span> <span class="item_price val"><span id="pricetag_3"></span>11元</span></p>
 			</div>
 			</a>
 		</div>
 		<div class="col-md-4 related products-grid">
 			<a href="single.html?id=6">
-			<img src="images/03.jpg" alt=" " class="img-responsive" />
+			<img src="images/yaxiong.jpg" alt=" " class="img-responsive" />
 			<div class="simpleCart_shelfItem rel">
-				<p><span class="overline"><span id="npricetag_4"></span>12.8元</span> <span class="item_price val"><span id="pricetag_4"></span>16元</span></p>
+				<p><span class="overline"><span id="npricetag_4"></span>16.8元</span> <span class="item_price val"><span id="pricetag_4"></span>12.8元</span></p>
 			</div>
 			</a>
 		</div>
@@ -243,7 +243,7 @@
 						$(".item_name").html(c.name);
 						$("#product_half_name").html(c.keywords);
 						$(".qwe").html("￥ " + c.price);
-						$("#secondDescriptor").html(c.weight + "g / Pretium 精选价格");
+						$("#secondDescriptor").html("<span style='text-decoration: line-through; color:#aaa'> 原价: "+c.marketprice+" </span> "+c.content);
 						if(c.description == null || c.description == undefined){
 							$("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
 						}else{
@@ -253,7 +253,7 @@
 						$("#pass_img")[0].src=c.img;
 						$(".item_id").html(productid);
 						$(".item_img").html(c.img);
-						$("#weightIndicator").html(" "+c.weight+"克");
+						$("#weightIndicator").html("最低: "+c.weight+"克");
 						// Can also be used with $(document).ready()
 						/*$(window).load(function() {
 						  /*$('.flexslider').flexslider({
@@ -305,7 +305,7 @@ function showSpecs(specarr){
 	var ty = $("#specbox").html();
 	for(i=0;i<specarr.length;i++){
 		var s = specarr[i];
-		ty += '<div class="col-rad">\n' +
+		ty += '<div class="col-rad tyy">\n' +
 		'\t<div class="col-rad-left">\n' +
 		'\t\t<p>'+s.n+'</p>'+
 		//'\t\t<select class="somehow-specs arrival">\n' +
@@ -349,7 +349,7 @@ function changeSpecradio(item){
 	jQuery(".qwe").html("￥ " + targetPrice);
 	product_obj.tgtPrice = targetPrice;
 	$('#spec-input-'+specId).val(spec);
-	$(item).button('toggle');
+	//$(item).button('toggle');
 }
 </script>
 <!-- footer -->

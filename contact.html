@@ -10,11 +10,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- js -->
 <script src="js/jquery-1.11.1.min.js"></script>
 <!-- //js -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" crossorigin="anonymous">
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!--<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />-->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+	
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -40,39 +45,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- header -->
 <script>show_top_header();</script>
 <!-- contact -->
+	<center>
+	<div class="card w-100" style="padding:30px;">
+		<ul class="list-group list-group-flush text-center" style="font-size: 1.8em;">
+					<li class="list-group-item text-center" style="font-size:1.3em;">小鹿云 - 萌多多</li>
+					<li class="list-group-item text-center" style="font-size:0.7em">商品咨询, 支付问题，商务合作</li>
+					<li class="list-group-item text-center"><a href="tel:18611823550" class="btn btn-outline-primary"> 拨打 ： 客户服务 </a> <span style="font-size: 0.6em;margin-left:10px;"> 18611823550 </span></li>
+ 		</ul>
+	</div></center>
 	<div class="contact">
 		<div class="container">
 			<div class="col-md-4 contact-left">
-				<h3>微商城服务：- 小鹿云 -</h3>
-				<h3>关于我们</h3>
-				<p>欢迎您联系我们
-					<span>微信： 18611823550</span>
-					<span>福田大道888号，深圳市，广东省</span></p>
-				<ul>
-					<li>电话 :+86 0755 4589 2456</li>
-					<li><a href="javascript:void">微商城服务： 小鹿云</a></li>
-				</ul>
+					<!--<span style="font-size: 1.2em"><a href="tel:">商品小二： 18611823550</a></span>-->
 				
-			<div class="contact-bottom">
-				<iframe id="geoPage" width="100%" height="30%" frameborder=0 scrolling="no"
-    			src="http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:22.52401,114.05753;title:萌多多私宠会馆;addr:皇岗村地铁口E口外&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp"></iframe>
-     
-				<!--<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d96908.54934770924!2d-73.74913540000001!3d40.62123259999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sanimal+rescue+service+near+Inwood%2C+New+York%2C+NY%2C+United+States!5e0!3m2!1sen!2sin!4v1436335928062" frameborder="0" style="border:0" allowfullscreen></iframe>-->
-			</div>
+				<div class="contact-bottom">
+					<iframe id="geoPage" width="100%" height="30%" frameborder=0 scrolling="no"
+					src="http://apis.map.qq.com/tools/poimarker?type=0&marker=coord:22.52401,114.05753;title:萌多多私宠会馆;addr:皇岗村地铁口E口外&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp"></iframe>
+
+					<!--<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d96908.54934770924!2d-73.74913540000001!3d40.62123259999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sanimal+rescue+service+near+Inwood%2C+New+York%2C+NY%2C+United+States!5e0!3m2!1sen!2sin!4v1436335928062" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+				</div>
 			</div>
 			
 			<div class="col-md-8 contact-left">
-				<h3>我们十分重视您的想法</h3>
+				<h3>您遇到了什么问题？</h3>
 				<div method="post" onsubmit="">
-					<input id="in_call" type="text" placeholder="可选（您的称呼）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '可选（您的称呼）';}" >
-					<input id="in_acc" type="text" value="可选（您在本站注册的手机号）" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '可选（您在本站注册的手机号）';}">
-					<textarea id="in_opinion" type="text"  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '您的想法';}" required>您的想法：</textarea>
+					<input id="in_call" type="text" value="可选（您的称呼）" onfocus="if(this.value == '可选（您的称呼）')this.value = '';" onblur="if (this.value == '') {this.value = '可选（您的称呼）';}" >
+					<input id="in_acc" type="text" value="可选（您在本站注册的手机号）" onfocus="if(this.value == '可选（您在本站注册的手机号）')this.value = '';" onblur="if (this.value == '') {this.value = '可选（您在本站注册的手机号）';}">
+					<textarea id="in_opinion" type="text"  onfocus="if(this.value == '请简要描述')this.value = '';" onblur="if (this.value == '') {this.value = '请简要描述';}" required>请简要描述</textarea>
 					<button class="btn btn-outline btn-primary btn-block" type="submit" value="提交" onclick="goSubmit()">提交</button>
 				</div>
 			</div>
 			<div class="clearfix"> </div>
 		</div>
 	</div>
+	<center>
+	<div class="card w-100 " style="margin-top:30px; padding: 30px;">
+		<ul class="list-group list-group-flush text-center">
+					<li class="list-group-item text-center">软件提供： 微信 lugt00</li>
+					<li class="list-group-item text-center"><a class="btn btn-outline-primary" href="tel:18611823550">欢迎致电</a></li>
+ 		</ul>
+	</div></center>
 <!-- //contact -->
 <!-- footer -->
 <script>smart_showfooter();</script>
