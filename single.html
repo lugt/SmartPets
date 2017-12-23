@@ -39,84 +39,6 @@
 </head>
 <body>
 <!-- header -->
-	<script>
-		var product_specs = {};
-		var productid = GetQueryString("id");
-		if(parseInt(productid) <= 0){
-			productid = "1";
-		}						
-
-		var product_obj = null;
-		shangpin(productid);
-		
-		function addToCart(){
-			if(product_obj == null){
-				return;
-			}
-			var specs = getSpecs();			
-			var now = simpleCart.add(
-				{ 
-					name: product_obj.name , 
-					price: product_obj.price, 
-					img:product_obj.img, 
-					id : productid, 
-					spec : specs,
-					quantity: $("#quantity").val()
-				});
-			if(now !=null)alert("添加成功！");
-		}
-
-		function shangpin(productid){
-			var a = "/api/commodity?action=find_good&commodity="+ productid;
-			$.ajax(
-				{ url:a }
-			).fail(
-				function(obj,n){
-					// 失败时执行
-					//lert("失败了");
-					console.log("失败了："+obj+n);
-				}
-			).done(
-				function(obj,n){
-					// 成功时执行
-					console.log(obj);
-					var c = JSON.parse(obj);
-					if(c.code == 1000){
-						// c.
-						var specstr = c.spec;
-						if(typeof(specstr) == "string" && specstr.length > 1){
-							c.spec = JSON.parse(specstr);
-							showSpecs(c.spec);
-						}
-						product_obj = c;
-						jQuery(".item_name").html(c.name);
-						jQuery("#product_half_name").html(c.keywords);
-						jQuery(".qwe").html("￥ " + c.price);
-						jQuery("#secondDescriptor").html(c.weight + "g / Pretium 精选价格");
-						if(c.description == null || c.description == undefined){
-							jQuery("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
-						}else{
-							jQuery("#product_intro").html(c.description);	
-						}
-						
-						jQuery("#pass_img")[0].src=c.img;
-						jQuery(".item_id").html(productid);
-						jQuery(".item_img").html(c.img);
-						jQuery("#weightIndicator").html(" "+c.weight+"克");
-						// Can also be used with $(document).ready()
-						/*$(window).load(function() {
-						  /*$('.flexslider').flexslider({
-							animation: "slide",
-							controlNav: "thumbnails"
-						  });* /
-						});*/
-					}else{
-						alert(c.msg);
-					}
-				}
-			);
-		}
-	</script>
 <!-- //header -->
 
 <!-- //header -->
@@ -257,8 +179,87 @@
 </div>
 </div>
 <!-- single -->
-	
-<script>
+	<script>
+		var product_specs = {};
+		var productid = GetQueryString("id");
+		if(parseInt(productid) <= 0){
+			productid = "1";
+		}						
+
+		var product_obj = null;
+		shangpin(productid);
+		
+		function addToCart(){
+			if(product_obj == null){
+				return;
+			}
+			var specs = getSpecs();		
+			if(specs == null){
+				alert("请选择规格");
+			}
+			var now = simpleCart.add(
+				{ 
+					name: product_obj.name , 
+					price: product_obj.price, 
+					img:product_obj.img, 
+					id : productid, 
+					spec : specs,
+					quantity: $("#quantity").val()
+				});
+			if(now !=null)alert("添加成功！");
+		}
+
+		function shangpin(productid){
+			var a = "/api/commodity?action=find_good&commodity="+ productid;
+			$.ajax(
+				{ url:a }
+			).fail(
+				function(obj,n){
+					// 失败时执行
+					//lert("失败了");
+					console.log("失败了："+obj+n);
+				}
+			).done(
+				function(obj,n){
+					// 成功时执行
+					console.log(obj);
+					var c = JSON.parse(obj);
+					if(c.code == 1000){
+						// c.
+						var specstr = c.spec;
+						if(typeof(specstr) == "string" && specstr.length > 1){
+							c.spec = JSON.parse(specstr);
+							showSpecs(c.spec);
+						}
+						product_obj = c;
+						jQuery(".item_name").html(c.name);
+						jQuery("#product_half_name").html(c.keywords);
+						jQuery(".qwe").html("￥ " + c.price);
+						jQuery("#secondDescriptor").html(c.weight + "g / Pretium 精选价格");
+						if(c.description == null || c.description == undefined){
+							jQuery("#product_intro").html("专业营养师打造，高端宠物食品，立即订购！");
+						}else{
+							jQuery("#product_intro").html(c.description);	
+						}
+						
+						jQuery("#pass_img")[0].src=c.img;
+						jQuery(".item_id").html(productid);
+						jQuery(".item_img").html(c.img);
+						jQuery("#weightIndicator").html(" "+c.weight+"克");
+						// Can also be used with $(document).ready()
+						/*$(window).load(function() {
+						  /*$('.flexslider').flexslider({
+							animation: "slide",
+							controlNav: "thumbnails"
+						  });* /
+						});*/
+					}else{
+						alert(c.msg);
+					}
+				}
+			);
+		}
+		
 function getSpecs(){
 	var specs = [];
 	if(product_specs!=undefined && product_specs != null && product_specs.length > 0){
@@ -278,8 +279,9 @@ function getSpecs(){
 			if(chosen.id == undefined){
 				var sl = s.vals[0];
 				chosen = {id: s.id, n: s.n, val: sl.val, valn: sl.n,  av: sl.av, vp: sl.vp};	
-				console.log("default chosen on id:"+i);
-				console.debug(chosen);
+				return null;
+				//console.log("default chosen on id:"+i);
+				//console.debug(chosen);
 			}
 			specs.push(chosen);
 		}
