@@ -216,9 +216,9 @@
 					var cquant = goods[i].fields().quantity;
 					sumOfMoney += cquant * price;
 					var cname = (goods[i].fields().name == undefined)?"商品A":goods[i].fields().name;
-					var cimg = (goods[i].fields().img == undefined)?"images/123.jpg":goods[i].fields().img;
-					var cspec = goods[i].fields().spec;
-					console.debug(goods[i].fields());
+					var cimg = (goods[i].get("img") == undefined)?"images/1569.gif":goods[i].get("img");
+					var cspec = goods[i].get("spec");
+					console.debug(goods[i].get("spec"));
 					var cval = formatSpecs(cspec);
 				/*''+*/
 					innerT += '<div class="cart-header cart-t'+i+'">'+
@@ -229,7 +229,7 @@
 '                           <h3>'+cname+'</h3>'+
 '					   <div class="cart-item-info">'+
 '							<ul class="qty">'+
-'								<li><p>数量 : '+cquant+'</p></li>'+
+'								<li><p>数量 : '+cquant+' ，小计 : '+goods[i].get("subtotal")+'</p></li>'+
 '							</ul>'+
 							'<ul class="qty">'+
 '								<li><p>'+cval+'</p></li>'+
