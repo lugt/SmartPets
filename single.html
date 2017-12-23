@@ -141,40 +141,23 @@
 				<h3 id="product_name" class="item_name" style="font-size: 1.5em;">金卡立减！</h3>
 				<h4 id="product_half_name"> </h4>
 				<p><h2><span class="item_price qwe" style="font-size: 1.2em;">￥ ******</span></h2> <a href="#" style="font-size: 1.2em;" id="secondDescriptor">Pretium 精选价</a></p>
-				<div>
-				<div class="col-rad">
-					<div class="col-rad-left">
-						<select class="arrival">
-							<option>重量</option>
-						</select>
-					</div>
-					<div class="col-rad-right">
-						<section>
-							<div class="row">
-								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio" checked="checked"><i></i>100g</label>
+				<div id="specbox">
+					<div class="col-rad tyy">
+						<div class="col-rad-left">
+							<p>配送方式</p>
+						</div>
+						<div class="col-rad-right">
+							<section>
+								<div class="row">
+									<div class="colr ert">
+										<label class="radio"><input type="radio" name="radio1" checked=""><i></i>5公里送货上门/其他地区快递</label>
+									</div>
 								</div>
-							</div>						
-						</section>
+							</section>
+						</div>
+						<div class="clearfix"> </div>
 					</div>
-					<div class="clearfix"> </div>
 				</div>
-				<div class="col-rad tyy">
-					<div class="col-rad-left">
-						<p>配送方式</p>
-					</div>
-					<div class="col-rad-right">
-						<section id="specbox">
-							<div class="row">
-								<div class="colr ert">
-									<label class="radio"><input type="radio" name="radio1" checked=""><i></i>5公里送货上门/其他地区快递</label>
-								</div>
-							</div>
-						</section>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
 				<p class="qty">数量 ：</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="form-control input-small">
 				<a class="order" onclick="addToCart(this)" style="margin-bottom:0;width :90%;color:#fff;font-size:1em;padding:0.6em;max-width:600px">添加至购物车</a><br>
 				<a class="order" href="checkout.html" style="margin-top:0;width:90%;color:#BC1C62;background:#ECD012;font-size:1em;padding:0.6em;max-width:600px">去购物车结算</a>
@@ -287,7 +270,7 @@ function getSpecs(){
 			for(j=0; j<s.vals.length; j++){
 				var sl = s.vals[j];
 				if(s.vals[j].val == val){
-					chosen = {id: s.id, n: s.n, val: sl.val, valn: sl.n,  av: sl.av, vp: sl.vp};
+					chosen = {id: s.id, n: s.n, val: sl.val, valn: sl.n, av: sl.av, vp: sl.vp};
 					console.log("selected chosen on id:"+i);
 					console.debug(chosen);
 				}
@@ -314,9 +297,10 @@ function showSpecs(specarr){
 		var s = specarr[i];
 		ty += '<div class="col-rad">\n' +
 		'\t<div class="col-rad-left">\n' +
-		'\t\t<select class="arrival">\n' +
-		'\t\t\t<option>'+s.n+'</option>\n' +
-		'\t\t</select>\n' +
+		       s.n+
+		//'\t\t<select class="somehow-specs arrival">\n' +
+		//'\t\t\t<option>'+s.n+'</option>\n' +
+		//'\t\t</select>\n' +
 		'\t</div>\n' +
 		'\t<div class="col-rad-right">\n' +
 		'\t\t<section>\n' +
