@@ -64,7 +64,7 @@
 						c.phone = ""+c.phone;
 					}
 					$("#out_phone").html(c.phone.substring(0,3) + "****"+c.phone.substring(7,11));
-					$("#main-body").show();
+					$("#main-body-center").show();
 				}else{
 					if(c.code == -2010){
 						localStorage.setItem("token","ssp");	
@@ -89,7 +89,7 @@
 	
 
 <!-- //login-page -->
-<div class="row" style="font-size:1.1em" id="main-body" style="display:none">
+<div class="row" style="font-size:1.1em" id="main-body-center" style="display:none">
 	<div class="col-lg-7 col-sm-12" style="padding:10%">
 		<div class="card" style="border-radius:10px; background:#FAD65C; box-shadow: 10px 10px 5px #888888; padding:30px 0; margin-bottom: 30px;">
 		  <div class="welcome-info" >
