@@ -196,6 +196,7 @@
 				console.log(obj);
 				var c = JSON.parse(obj);
 				if(c.code == 1000){
+					simpleCart.empty();
 					location.href="order.html?id="+c.order;
 				}else{
 					if(c.code == -1015){
